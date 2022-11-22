@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "828229194699",
+    "project_id": "megashop-salt",
+    "storage_bucket": "megashop-salt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828229194699:android:05a25b60f8d38c184a5c4e",
+        "android_client_info": {
+          "package_name": "com.saltinfo.megashop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828229194699-f6dlem1kha6piitcqdtgn1tbhic4mqu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw31jUazI3HKqpSh4Ln6djnmhsYwcOYV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828229194699-f6dlem1kha6piitcqdtgn1tbhic4mqu3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
