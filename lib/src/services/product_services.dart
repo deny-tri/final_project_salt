@@ -30,20 +30,6 @@ class ProductService {
     }
   }
 
-  Future<Either<String, List<ProductModel>>> fetchListProductCaraKedua() async {
-    try {
-      final querySnapshot = await productCollection.get();
-
-      final dataSatu = <ProductModel>[];
-      for (var element in querySnapshot.docs) {
-        dataSatu.add(ProductModel.fromMap(element.data()));
-      }
-      return right(dataSatu);
-    } catch (e) {
-      return left(e.toString());
-    }
-  }
-
   Future<Either<String, String>> addToCart(ProductModel model) async {
     try {
       String uid = await Commons().getUID();
@@ -86,14 +72,14 @@ class ProductService {
     }
   }
 
-  Future<Either<String, String>> removeCartItemCount(String productID) async {
+  Future<Either<String, String>> removeCartItemCount(ProductModel model) async {
     try {
       String uid = await Commons().getUID();
 
       await usersCollection
           .doc(uid)
           .collection(cartCollectionName)
-          .doc(productID)
+          .doc(model.id)
           .delete();
 
       return right('Berhasil Dihapus');
@@ -101,8 +87,63 @@ class ProductService {
       return left(e.toString());
     }
   }
+
+  Future<Either<String, String>> addToWishList(ProductModel model) async {
+    try {
+      String uid = await Commons().getUID();
+      usersCollection
+          .doc(uid)
+          .collection(wishListCollectionName)
+          .doc(model.id)
+          .set(model.toMap());
+      return right('Berhasil Menyimpan');
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  Future<Either<String, String>> removeFromWishlist(String id) async {
+    try {
+      String uid = await Commons().getUID();
+      usersCollection
+          .doc(uid)
+          .collection(wishListCollectionName)
+          .doc(id)
+          .delete();
+      return right('Berhasil Menghapus dari Wishlist');
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  Future<Either<String, bool>> checkWishlist(String id) async {
+    try {
+      String uid = await Commons().getUID();
+      final querySnapshot = await usersCollection
+          .doc(uid)
+          .collection(wishListCollectionName)
+          .doc(id)
+          .get();
+      return right(querySnapshot.exists);
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  Future<Either<String, List<ProductModel>>> fetchListWishlist() async {
+    try {
+      String uid = await Commons().getUID();
+      final querySnapshot = await usersCollection
+          .doc(uid)
+          .collection(wishListCollectionName)
+          .get();
+
+      final data = querySnapshot.docs
+          .map((e) => ProductModel.fromMap(e.data()))
+          .toList();
+      return right(data);
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
 }
-
-//Query Snapshot => banyak document
-
-//Document Snapshot => satu document

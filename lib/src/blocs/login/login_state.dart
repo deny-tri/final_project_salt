@@ -17,7 +17,12 @@ class LoginIsFailed extends LoginState {
 
 class Authenticated extends LoginState {}
 
-class UnAuthenticated extends LoginState {}
+class UnAuthenticated extends LoginState {
+  final String message;
+  UnAuthenticated({
+    required this.message,
+  });
+}
 
 class AuthError extends LoginState {
   final String error;

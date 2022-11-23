@@ -16,3 +16,4 @@ part 'admin_screens.dart';
 part 'detail_product_screens.dart';
 part 'profile_screens.dart';
 part 'product_screens.dart';
+part 'cart_screens.dart';

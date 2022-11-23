@@ -26,13 +26,33 @@ class Commons {
         .showSnackBar(SnackBar(content: message.text.make()));
   }
 
-  //fungsi untuk get Image from gallery
   Future<File> getImage() async {
     final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 10,
     );
     return File(pickedFile!.path);
+  }
+
+  Future<String> uploadFile(String id, File file, {String? fileName}) async {
+    String imageName = fileName ??
+        file.path.substring(
+            file.path.lastIndexOf("/") + 1, file.path.lastIndexOf("."));
+    Reference ref = FirebaseStorage.instance.ref('$id/$imageName');
+    TaskSnapshot snapshot = await ref.putFile(file);
+    return await snapshot.ref.getDownloadURL();
+  }
+
+  Future<List<String>> uploadFiles(String id, List<File> files) async {
+    var imageUrls =
+        await Future.wait(files.map((file) => uploadFile(id, file)));
+    return imageUrls;
+  }
+
+  String setPriceToIDR(double price) {
+    return NumberFormat.currency(locale: 'id_ID', decimalDigits: 0)
+        .format(price)
+        .toString();
   }
 
   String greeting() {

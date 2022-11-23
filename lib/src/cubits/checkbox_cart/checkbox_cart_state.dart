@@ -1,11 +1,11 @@
-// part of 'checkbox_cart_cubit.dart';
+part of 'checkbox_cart_cubit.dart';
 
-// abstract class CheckboxCartState {}
+abstract class CheckboxCartState {}
 
-// class CheckboxCartInitial extends CheckboxCartState {}
+class CheckboxCartInitial extends CheckboxCartState {}
 
-// class CheckboxCartIsChecked extends CheckboxCartState {
-//   final List<ProductModel> model;
+class CheckboxCartIsChecked extends CheckboxCartState {
+  final List<ProductModel> model;
 
-//   CheckboxCartIsChecked(this.model);
-// }
+  CheckboxCartIsChecked(this.model);
+}

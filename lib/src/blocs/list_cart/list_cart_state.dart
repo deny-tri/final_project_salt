@@ -1,20 +1,20 @@
-// part of 'list_cart_bloc.dart';
+part of 'list_cart_bloc.dart';
 
-// abstract class ListCartState {}
+abstract class ListCartState {}
 
-// class ListCartInitial extends ListCartState {}
+class ListCartInitial extends ListCartState {}
 
-// class ListCartIsLoading extends ListCartState {}
+class ListCartIsLoading extends ListCartState {}
 
-// class ListCartIsSuccess extends ListCartState {
-//   final List<ProductModel> data;
-//   final List<ProductModel> retrainData;
+class ListCartIsSuccess extends ListCartState {
+  final List<ProductModel> data;
+  final List<ProductModel> retrainData;
 
-//   ListCartIsSuccess(this.data, this.retrainData);
-// }
+  ListCartIsSuccess(this.data, this.retrainData);
+}
 
-// class ListCartIsFailed extends ListCartState {
-//   final String message;
+class ListCartIsFailed extends ListCartState {
+  final String message;
 
-//   ListCartIsFailed(this.message);
-// }
+  ListCartIsFailed(this.message);
+}
