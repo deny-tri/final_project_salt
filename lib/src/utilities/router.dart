@@ -13,6 +13,8 @@ mixin routeName {
   static const profilePath = '/home/profile';
   static const product = 'product';
   static const productPath = '/home/product';
+  static const cart = 'cart';
+  static const cartPath = '/home/cart';
 }
 
 final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
@@ -53,10 +55,12 @@ final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
       },
       routes: [
         GoRoute(
-            path: routeName.profile,
-            builder: (context, state) {
-              return const ProfileScreens();
-            }),
+          path: routeName.cart,
+          builder: (context, state) {
+            BlocProvider.of<ListCartBloc>(context).add(FetchListCart());
+            return const CartScreen();
+          },
+        ),
         GoRoute(
             path: routeName.product,
             builder: (context, state) {

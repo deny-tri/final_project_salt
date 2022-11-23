@@ -26,13 +26,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
     on<GoogleSignInRequested>((event, emit) async {
       emit(LoginIsLoading());
-      try {
-        await UserServices().signInWithGoogle();
-        emit(Authenticated());
-      } catch (e) {
-        emit(AuthError(e.toString()));
-        emit(UnAuthenticated());
-      }
+      final result = await UserServices().signInWithGoogle();
+      emit(
+        result.fold(
+          (l) => UnAuthenticated(message: l),
+          (r) {
+            Commons().setUID(r.uid!);
+            return Authenticated();
+          },
+        ),
+      );
+      // try {
+      //   await UserServices().signInWithGoogle();
+      //   emit(Authenticated());
+      // } catch (e) {
+      //   emit(AuthError(e.toString()));
+      //   emit(UnAuthenticated());
+      // }
     });
   }
 }

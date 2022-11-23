@@ -51,6 +51,23 @@ class UserServices {
     }
   }
 
+  Future<Either<String, UserModel>> changeProfile(UserModel userData) async {
+    try {
+      String uid = await Commons().getUID();
+      final newPhoto = await Commons().getImage();
+      String downloadUrl =
+          await Commons().uploadFile(uid, newPhoto, fileName: uid);
+      if (downloadUrl.isNotEmpty) {
+        usersCollection
+            .doc(uid)
+            .set(userData.copyWith(photoProfile: downloadUrl).toMap());
+      }
+      return loadUserData(uid);
+    } on FirebaseAuthException catch (e) {
+      return left(e.toString().split(']').last);
+    }
+  }
+
   Future<Either<String, UserModel>> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleAccount = await GoogleSignIn().signIn();
@@ -62,16 +79,13 @@ class UserServices {
       final result =
           await FirebaseAuth.instance.signInWithCredential(credential);
       if (result.user != null) {
-        //Kumpulkan data
         final userData = UserModel(
             admin: false,
             email: result.user!.email,
             photoProfile: '',
             uid: result.user!.uid,
             username: result.user!.email!.split('@')[0]);
-        //Kirim data ke collection
         usersCollection.doc(result.user!.uid).set(userData.toMap());
-        //Return
         return right(userData);
       }
       return left('Sign In Gagal');
