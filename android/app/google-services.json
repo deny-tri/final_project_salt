@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "347194894634",
-    "project_id": "mini-eccommerce-project",
-    "storage_bucket": "mini-eccommerce-project.appspot.com"
+    "project_number": "828229194699",
+    "project_id": "megashop-salt",
+    "storage_bucket": "megashop-salt.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:347194894634:android:83b00d1dfaaefc96a69653",
+        "mobilesdk_app_id": "1:828229194699:android:42d48ad54b47dcc84a5c4e",
         "android_client_info": {
-          "package_name": "com.repticinfo.repticpedia"
+          "package_name": "com.saltinfo.megashop"
         }
       },
       "oauth_client": [
         {
-          "client_id": "347194894634-ms86voi52nsrrk64rp7qns5igct7f7pv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.repticinfo.repticpedia",
-            "certificate_hash": "d25d25a001c5f162da78eb1f002f3b43ff70c052"
-          }
-        },
-        {
-          "client_id": "347194894634-ddpl46ff2s67egjioj36mq1o8tfhl8f6.apps.googleusercontent.com",
+          "client_id": "828229194699-f6dlem1kha6piitcqdtgn1tbhic4mqu3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDT9RD-z32yZy2tQY82uLPEHO_l5lj-aZY"
+          "current_key": "AIzaSyCw31jUazI3HKqpSh4Ln6djnmhsYwcOYV0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "347194894634-ddpl46ff2s67egjioj36mq1o8tfhl8f6.apps.googleusercontent.com",
+              "client_id": "828229194699-f6dlem1kha6piitcqdtgn1tbhic4mqu3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -44,27 +36,35 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:347194894634:android:f3370d80dea0e5a4a69653",
+        "mobilesdk_app_id": "1:828229194699:android:be6a78f3de99f5ec4a5c4e",
         "android_client_info": {
-          "package_name": "com.saltinfo.megashop"
+          "package_name": "com.saltinfo.megashop_salt"
         }
       },
       "oauth_client": [
         {
-          "client_id": "347194894634-ddpl46ff2s67egjioj36mq1o8tfhl8f6.apps.googleusercontent.com",
+          "client_id": "828229194699-an4bqbuuncuvndfm4crm6gllqneqjjtd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.saltinfo.megashop_salt",
+            "certificate_hash": "d25d25a001c5f162da78eb1f002f3b43ff70c052"
+          }
+        },
+        {
+          "client_id": "828229194699-f6dlem1kha6piitcqdtgn1tbhic4mqu3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDT9RD-z32yZy2tQY82uLPEHO_l5lj-aZY"
+          "current_key": "AIzaSyCw31jUazI3HKqpSh4Ln6djnmhsYwcOYV0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "347194894634-ddpl46ff2s67egjioj36mq1o8tfhl8f6.apps.googleusercontent.com",
+              "client_id": "828229194699-f6dlem1kha6piitcqdtgn1tbhic4mqu3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

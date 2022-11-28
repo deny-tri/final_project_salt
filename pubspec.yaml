@@ -42,7 +42,6 @@ dependencies:
   velocity_x: ^3.6.0
   google_sign_in: ^5.4.2
   email_validator: ^2.1.17
-  equatable: ^2.0.3
   shimmer: ^2.0.0
   flutter:
     sdk: flutter
@@ -75,9 +74,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+   - assets/images/logo.jpeg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
