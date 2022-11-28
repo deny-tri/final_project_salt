@@ -43,21 +43,21 @@ class HomeScreens extends StatelessWidget {
   }
 
   Widget _buildBannerHome(BuildContext context) {
-    return VxBox(
-      child: Image.network(
-        "https://assets.digination.id/crop/0x0:0x0/x/photo/2021/03/19/3776868825.png",
-        fit: BoxFit.cover,
-      ),
-    )
-        .size(context.safePercentWidth * 100, context.safePercentHeight * 20)
-        .rounded
-        .make();
-    // return const HStack([])
-    //     .box
-    //     .outerShadow
-    //     .color(colorName.white)
+    // return VxBox(
+    //   child: Image.network(
+    //     "https://assets.digination.id/crop/0x0:0x0/x/photo/2021/03/19/3776868825.png",
+    //     fit: BoxFit.cover,
+    //   ),
+    // )
     //     .size(context.safePercentWidth * 100, context.safePercentHeight * 20)
+    //     .rounded
     //     .make();
+    return HStack(['test'.text.make()])
+        .box
+        .outerShadow
+        .color(colorName.white)
+        .size(context.safePercentWidth * 100, context.safePercentHeight * 20)
+        .make();
   }
 
   Widget _buildMenuHome(BuildContext context) {
