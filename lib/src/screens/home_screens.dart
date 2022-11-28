@@ -52,12 +52,6 @@ class HomeScreens extends StatelessWidget {
         .size(context.safePercentWidth * 100, context.safePercentHeight * 20)
         .rounded
         .make();
-    // return HStack(['test'.text.make()])
-    //     .box
-    //     .outerShadow
-    //     .color(colorName.white)
-    //     .size(context.safePercentWidth * 100, context.safePercentHeight * 20)
-    //     .make();
   }
 
   Widget _buildMenuHome(BuildContext context) {

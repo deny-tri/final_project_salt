@@ -40,10 +40,6 @@ class App extends StatelessWidget {
           );
         },
       ),
-      // child: MaterialApp.router(
-      //   debugShowCheckedModeBanner: false,
-      //   routerConfig: router,
-      // ),
     );
   }
 }
