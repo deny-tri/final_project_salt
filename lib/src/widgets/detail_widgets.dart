@@ -42,29 +42,45 @@ class DetailProductWidgets extends StatelessWidget {
   Widget _buildImage(BuildContext context) {
     return VStack(
       [
-        VxBox(
-                child: ClipRRect(
-          borderRadius: BorderRadius.circular(18),
-          // child: Image.network(
-          //   data.picture!,
-          //   fit: BoxFit.cover,
-          // ),
-        ))
-            .size(context.screenWidth, context.percentHeight * 30)
-            .bottomRounded(value: 20)
-            .make(),
-        16.widthBox,
-        data.name!.text.bold.capitalize.makeCentered(),
-        'Category Produk'.text.bold.make(),
-        16.widthBox,
+        VxSwiper.builder(
+          itemCount: data.picture!.length,
+          autoPlay: true,
+          aspectRatio: 16 / 9,
+          itemBuilder: (context, index) {
+            return AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.network(
+                data.picture![index],
+                fit: BoxFit.cover,
+              ),
+            );
+          },
+        ),
+
+        // VxBox(
+        //   child: ClipRRect(
+        //     borderRadius: BorderRadius.circular(18),
+        //     child: Image.network(
+        //       data.picture![0],
+        //       fit: BoxFit.cover,
+        //     ),
+        //   ),
+        // )
+        //     .size(context.screenWidth, context.percentHeight * 30)
+        //     .bottomRounded(value: 20)
+        //     .make(),
+        16.heightBox,
         HStack(data.category
             .map((e) => VxBox(child: e.text.color(colorName.white).make())
-                .color(colorName.grey)
+                .color(colorName.black)
                 .p4
                 .rounded
                 .make()
                 .pOnly(right: 4))
             .toList()),
+        24.heightBox,
+        data.name!.text.bold.capitalize.headline5(context).make(),
+        'USD. ${data.price!}'.text.make(),
         16.heightBox,
         'Description'.text.bold.capitalize.make(),
         data.description!.text.make(),

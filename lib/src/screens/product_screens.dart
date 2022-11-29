@@ -26,7 +26,7 @@ class ProductScreens extends StatelessWidget {
               final data = state.products;
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                  crossAxisCount: 1,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                 ),
