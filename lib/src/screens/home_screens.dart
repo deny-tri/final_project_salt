@@ -29,7 +29,13 @@ class HomeScreens extends StatelessWidget {
                   24.heightBox,
                   'Promo'.text.bold.make(),
                   8.heightBox,
-                  _buildListProduct().expand(),
+                  VxBox(
+                    child: _buildListProduct(),
+                  )
+                      .size(context.percentWidth * 100,
+                          context.percentHeight * 20)
+                      .make(),
+                  8.heightBox,
                 ],
                 alignment: MainAxisAlignment.start,
                 axisSize: MainAxisSize.max,
@@ -184,16 +190,29 @@ class HomeScreens extends StatelessWidget {
         }
         if (state is ListProductIsSuccess) {
           final data = state.products;
+          // return ListView.builder(
+          //   shrinkWrap: true,
+          //   scrollDirection: Axis.horizontal,
+          //   itemCount: data.length,
+          //   itemBuilder: (context, index) =>
+          //       ProductHome(productHome: data[index]),
+          // );
           return GridView.builder(
+            scrollDirection: Axis.horizontal,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
+              crossAxisCount: 1,
+              mainAxisExtent: 150.0,
             ),
+            // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            //   crossAxisCount: 2,
+            //   crossAxisSpacing: 16,
+            //   scrollDirection: Axis.horizontal,
+            //   mainAxisSpacing: 16,
+
             itemCount: data.length,
             itemBuilder: (context, index) {
-              return ProductWidgets(
-                products: data[index],
+              return ProductHome(
+                productHome: data[index],
               );
             },
           );
