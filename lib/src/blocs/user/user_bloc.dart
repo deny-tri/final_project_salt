@@ -28,5 +28,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await Commons().removeUID();
       UserServices().logOutUser();
     });
+    on<ChangePhoto>((event, emit) async {
+      final result =
+          await UserServices().changeProfile((state as UserIsSuccess).data);
+      emit(
+        result.fold(
+          (l) => UserIsFailed(message: l),
+          (r) => UserIsSuccess(data: r),
+        ),
+      );
+    });
   }
 }

@@ -15,6 +15,8 @@ mixin routeName {
   static const productPath = '/home/product';
   static const cart = 'cart';
   static const cartPath = '/home/cart';
+  static const wistlist = 'wistlist';
+  static const wishlistPath = '/home/wistlist';
 }
 
 final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
@@ -50,8 +52,9 @@ final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
       path: routeName.home,
       builder: (context, state) {
         BlocProvider.of<UserBloc>(context).add(LoadUserData());
+        BlocProvider.of<CartCountCubit>(context).getCartCount();
         BlocProvider.of<ListProductBloc>(context).add(FetchListProduct());
-        return const HomeScreens();
+        return HomeScreens();
       },
       routes: [
         GoRoute(
@@ -78,12 +81,18 @@ final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
               return const AdminScreens();
             }),
         GoRoute(
+            path: routeName.wistlist,
+            builder: (context, state) {
+              return const WishlistScreens();
+            }),
+        GoRoute(
             path: routeName.detail,
             builder: (context, state) {
-              final String id = state.extra as String;
+              String id = state.extra as String;
               BlocProvider.of<DetailProductsBloc>(context)
                   .add(FetchDetailProduct(docID: id));
-              return const DetailProduct();
+              BlocProvider.of<CheckSavedCubit>(context).checkWishList(id);
+              return const DetailScreen();
             }),
       ]),
 ]);

@@ -6,3 +6,6 @@ export 'list_product/list_product_bloc.dart';
 export 'detail_products/detail_products_bloc.dart';
 export 'list_cart/list_cart_bloc.dart';
 export 'add_to_cart/add_to_cart_bloc.dart';
+export 'order/order_bloc.dart';
+export 'list_wishlist/list_wishlist_bloc.dart';
+export 'list_order/list_order_bloc.dart';

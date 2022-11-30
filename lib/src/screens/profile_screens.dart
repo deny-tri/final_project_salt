@@ -7,66 +7,135 @@ class ProfileScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer<UserBloc, UserState>(
-          listener: (context, state) {
-            if (state is UserIsFailed) {
-              Commons().showSnackBar(context, state.message);
-            } else if (state is UserIsLogOut) {
-              context.go(routeName.login);
-            }
-          },
+        child: BlocBuilder<UserBloc, UserState>(
           builder: (context, state) {
-            if (state is UserIsLoading) {
-              return const CircularProgressIndicator().centered();
-            } else if (state is UserIsSuccess) {
+            if (state is UserIsSuccess) {
               return VStack(
                 [
-                  _buildAppbar(context, state.data),
-                  24.heightBox,
+                  ZStack(
+                    [
+                      VxCircle(
+                        radius: 120,
+                        backgroundImage: (state.data.photoProfile!.isNotEmpty)
+                            ? DecorationImage(
+                                image: NetworkImage(state.data.photoProfile!),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        color: colorName.white,
+                        icon: const Icon(Icons.photo_camera).onTap(() {
+                          BlocProvider.of<UserBloc>(context).add(ChangePhoto());
+                        }),
+                      )
+                    ],
+                    alignment: Alignment.center,
+                  ),
+                  16.heightBox,
+                  VStack(
+                    [
+                      state.data.username!.text.size(16).bold.make(),
+                      state.data.email!.text.size(12).make(),
+                    ],
+                    crossAlignment: CrossAxisAlignment.center,
+                  ),
+                  BlocBuilder<ListOrderBloc, ListOrderState>(
+                    builder: (context, listOrderState) {
+                      if (listOrderState is ListOrderIsSuccess) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: listOrderState.model.length,
+                          itemBuilder: (context, index) {
+                            return VStack([
+                              HStack([
+                                listOrderState.model[index].productName!.text
+                                    .make()
+                                    .expand(),
+                                (listOrderState.model[index].paymentStatus! == 0
+                                        ? 'Belum Dibayar'
+                                        : listOrderState.model[index]
+                                                    .paymentStatus! ==
+                                                1
+                                            ? 'Pesanan Diproses'
+                                            : 'Selesai')
+                                    .text
+                                    .color((listOrderState
+                                                .model[index].paymentStatus! ==
+                                            0
+                                        ? colorName.accentRed
+                                        : listOrderState.model[index]
+                                                    .paymentStatus! ==
+                                                1
+                                            ? colorName.accentBlue
+                                            : colorName.accentGreen))
+                                    .make()
+                              ]),
+                              const VxDivider(type: VxDividerType.horizontal)
+                                  .py8(),
+                              VStack(listOrderState.model[index].products
+                                  .map((e) => HStack([
+                                        VxBox()
+                                            .size(40, 40)
+                                            .bgImage(DecorationImage(
+                                              image: NetworkImage(
+                                                e.picture![0],
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ))
+                                            .roundedSM
+                                            .make(),
+                                        4.widthBox,
+                                        e.name!.text.make(),
+                                      ]).py4())
+                                  .toList()),
+                              16.heightBox,
+                              'Total: ${Commons().setPriceToIDR(listOrderState.model[index].totalPrice!)}'
+                                  .text
+                                  .bold
+                                  .make()
+                                  .objectBottomRight(),
+                            ])
+                                .p16()
+                                .box
+                                .roundedSM
+                                .color(colorName.white)
+                                .make()
+                                .p16()
+                                .onTap(() {
+                              switch (
+                                  listOrderState.model[index].paymentStatus!) {
+                                case 0:
+                                  Commons().showSnackBar(
+                                      context, 'Ke Halaman Pembayaran');
+                                  break;
+                                case 1:
+                                  Commons().showSnackBar(
+                                      context, 'Ke Halaman Detail');
+                                  break;
+                                case 2:
+                                  Commons().showSnackBar(
+                                      context, 'Ke Halaman Selesai');
+                                  break;
+                                default:
+                              }
+                            });
+                          },
+                        );
+                      }
+                      return 0.heightBox;
+                    },
+                  )
                 ],
-                alignment: MainAxisAlignment.start,
-                axisSize: MainAxisSize.max,
-              );
+                crossAlignment: CrossAxisAlignment.center,
+              ).wFull(context);
             }
             return 0.heightBox;
           },
-        ).p16().centered(),
+        ).scrollVertical(),
       ),
     );
-  }
-
-  Widget _buildAppbar(BuildContext context, UserModel data) {
-    return VxBox(
-      child: HStack(
-        [
-          HStack([
-            VxCircle(
-              radius: 80,
-              backgroundImage: (data.photoProfile!.isNotEmpty)
-                  ? DecorationImage(
-                      image: NetworkImage(data.photoProfile!),
-                      fit: BoxFit.cover,
-                    )
-                  : null,
-            ).onTap(() {
-              context.go(routeName.adminPath);
-            }),
-            16.widthBox,
-            '${Commons().greeting()},\n'
-                .richText
-                .size(12)
-                .withTextSpanChildren([
-              data.username!.textSpan.bold.size(18).make(),
-            ]).make(),
-          ]).expand(),
-          IconButton(
-            onPressed: () {
-              BlocProvider.of<UserBloc>(context).add(LogOutUser());
-            },
-            icon: const Icon(Icons.logout_rounded),
-          ),
-        ],
-      ),
-    ).gray100.make();
   }
 }

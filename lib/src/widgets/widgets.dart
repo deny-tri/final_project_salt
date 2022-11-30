@@ -7,6 +7,5 @@ import 'package:velocity_x/velocity_x.dart';
 import '../utilities/utilities.dart';
 part 'textfield_widgets.dart';
 part 'button_widgets.dart';
-part 'detail_widgets.dart';
 part 'product_widgets.dart';
 part 'search_widgets.dart';

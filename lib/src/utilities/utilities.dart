@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:final_project_salt/src/blocs/blocs.dart';
+import 'package:final_project_salt/src/cubits/cubits.dart';
 import 'package:final_project_salt/src/screens/screens.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
