@@ -11,3 +11,4 @@ import 'package:google_sign_in/google_sign_in.dart';
 part 'user_services.dart';
 part 'admin_services.dart';
 part 'product_services.dart';
+part 'order_services.dart';

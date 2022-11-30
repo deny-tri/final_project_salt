@@ -95,14 +95,14 @@ class HomeScreens extends StatelessWidget {
           [
             IconButton(
               onPressed: () {
-                context.go(routeName.cartPath);
+                context.go(routeName.wishlistPath);
               },
               icon: const Icon(
-                Icons.shopping_cart_rounded,
+                Icons.favorite_border_rounded,
                 color: colorName.accentRed,
               ),
             ),
-            'My Cart'.text.bold.color(colorName.black).makeCentered()
+            'Favorite'.text.bold.color(colorName.black).makeCentered()
           ],
         ).p16(),
         VStack(
@@ -145,24 +145,36 @@ class HomeScreens extends StatelessWidget {
               data.username!.textSpan.bold.size(18).make(),
             ]).make(),
           ]).expand(),
-          IconButton(
-            onPressed: () {
-              // BlocProvider.of<UserBloc>(context).add(LogOutUser());
+          BlocBuilder<CartCountCubit, CartCountState>(
+            builder: (context, state) {
+              return ZStack(
+                [
+                  IconButton(
+                    onPressed: () {
+                      context.go(routeName.cartPath);
+                    },
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: colorName.black,
+                    ),
+                  ),
+                  (state as CartCountIsSuccess).value != 0
+                      ? VxBox(
+                              child: state.value.text
+                                  .size(8)
+                                  .white
+                                  .makeCentered()
+                                  .p4())
+                          .roundedFull
+                          .color(colorName.accentRed)
+                          .make()
+                          .positioned(right: 8, top: 2)
+                      : 0.heightBox
+                ],
+                alignment: Alignment.topRight,
+              );
             },
-            icon: const Icon(
-              Icons.search,
-              color: colorName.black,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              BlocProvider.of<UserBloc>(context).add(LogOutUser());
-            },
-            icon: const Icon(
-              Icons.shopping_cart_rounded,
-              color: colorName.black,
-            ),
-          ),
+          )
         ],
       ),
     ).gray100.make();

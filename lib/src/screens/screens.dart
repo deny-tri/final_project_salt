@@ -14,6 +14,7 @@ part 'splash_screens.dart';
 part 'register_screens.dart';
 part 'login_screens.dart';
 part 'home_screens.dart';
+part 'wishlist_screens.dart';
 part 'admin_screens.dart';
 part 'detail_product_screens.dart';
 part 'profile_screens.dart';
