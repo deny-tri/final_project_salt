@@ -1,7 +1,7 @@
 part of 'screens.dart';
 
-class WishlistScreens extends StatelessWidget {
-  const WishlistScreens({super.key});
+class WishListScreens extends StatelessWidget {
+  const WishListScreens({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +80,6 @@ class WishlistScreens extends StatelessWidget {
                     text: 'Cari Produk',
                     onPressed: () {
                       context.go(routeName.productPath);
-                      // BlocProvider.of<BottomNavBarCubit>(context)
-                      //     .changeIndex(0);
                     })
               ],
               crossAlignment: CrossAxisAlignment.center,

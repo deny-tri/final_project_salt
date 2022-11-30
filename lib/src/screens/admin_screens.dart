@@ -14,6 +14,7 @@ class _AdminScreensState extends State<AdminScreens> {
   final TextEditingController productCategoryController =
       TextEditingController();
   final TextEditingController productStockController = TextEditingController();
+  final TextEditingController productTypeController = TextEditingController();
   void reset() {
     productNameController.clear();
     productPriceController.clear();
@@ -68,6 +69,7 @@ class _AdminScreensState extends State<AdminScreens> {
                       name: productNameController.text,
                       description: productDescController.text,
                       category: productCategoryController.text,
+                      type: productTypeController.text,
                       stock: productStockController.text,
                       price: double.parse(productPriceController.text),
                     ));
@@ -100,6 +102,10 @@ class _AdminScreensState extends State<AdminScreens> {
       TextAdmin(
         controller: productCategoryController,
         title: 'Product Category',
+      ),
+      TextAdmin(
+        controller: productTypeController,
+        title: 'Product Type',
       ),
       TextAdmin(
         controller: productStockController,

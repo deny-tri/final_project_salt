@@ -20,6 +20,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
         description: event.description,
         stock: event.stock,
         category: event.category!.split(', '),
+        type: event.type!.split(', '),
       );
       final result = await AdminService().addNewProduct(data,
           file: (productPictureCubit.state is ProductPictureIsLoaded)

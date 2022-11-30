@@ -9,12 +9,14 @@ class AddProduct extends AdminEvent {
   final String? description;
   final String? stock;
   final String? category;
+  final String? type;
   final double? price;
   AddProduct({
     this.name,
     this.description,
     this.stock,
     this.category,
+    this.type,
     this.price,
   });
 }

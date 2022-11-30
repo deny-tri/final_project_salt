@@ -74,7 +74,17 @@ class HomeScreens extends StatelessWidget {
                 color: colorName.accentRed,
               ),
             ),
-            'Profile'.text.bold.color(colorName.black).makeCentered()
+            'Profile'.text.bold.color(colorName.black).makeCentered(),
+            IconButton(
+              onPressed: () {
+                context.go(routeName.adminPath);
+              },
+              icon: const Icon(
+                Icons.person,
+                color: colorName.accentRed,
+              ),
+            ),
+            'Add Product'.text.bold.color(colorName.black).makeCentered()
           ],
         ).p16(),
         VStack(
@@ -88,11 +98,7 @@ class HomeScreens extends StatelessWidget {
                 color: colorName.accentRed,
               ),
             ),
-            'Product'.text.bold.color(colorName.black).makeCentered()
-          ],
-        ).p16(),
-        VStack(
-          [
+            'Product'.text.bold.color(colorName.black).makeCentered(),
             IconButton(
               onPressed: () {
                 context.go(routeName.wishlistPath);
@@ -127,7 +133,7 @@ class HomeScreens extends StatelessWidget {
         .box
         .outerShadow
         .color(colorName.white)
-        .size(context.safePercentWidth * 100, context.safePercentHeight * 15)
+        .size(context.safePercentWidth * 100, context.safePercentHeight * 20)
         .make();
   }
 
@@ -136,6 +142,17 @@ class HomeScreens extends StatelessWidget {
       child: HStack(
         [
           HStack([
+            VxCircle(
+              radius: 56,
+              backgroundImage: (data.photoProfile!.isNotEmpty)
+                  ? DecorationImage(
+                      image: NetworkImage(data.photoProfile!),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+            ).onTap(() {
+              context.go(routeName.profilePath);
+            }),
             16.widthBox,
             'Good ${Commons().greeting()},\n'
                 .richText
