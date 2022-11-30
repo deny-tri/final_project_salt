@@ -83,7 +83,7 @@ final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
         GoRoute(
             path: routeName.wistlist,
             builder: (context, state) {
-              return const WishlistScreens();
+              return const WishListScreens();
             }),
         GoRoute(
             path: routeName.detail,

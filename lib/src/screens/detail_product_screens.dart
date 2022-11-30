@@ -25,14 +25,14 @@ class DetailScreen extends StatelessWidget {
               },
               builder: (context, addToCartState) {
                 return BlocBuilder<CheckCategoryCubit, CheckCategoryState>(
-                  builder: (context, categorytState) {
+                  builder: (context, categoryState) {
                     return ButtonWidget(
                       text: 'Add To Cart',
                       isLoading: (addToCartState is AddToCartIsLoading),
                       onPressed: () {
                         BlocProvider.of<AddToCartBloc>(context).add(AddToCart(
                             state.model,
-                            (categorytState as CheckCategoryIsSelected)
+                            (categoryState as CheckCategoryIsSelected)
                                 .selectedCategory));
                       },
                     ).p16().box.white.withShadow([
@@ -107,25 +107,36 @@ class DetailScreen extends StatelessWidget {
         state.model.description!.text.size(14).color(colorName.grey).make(),
       ]).py16(),
       VStack([
-        'Category Produk'.text.bold.make(),
+        'Deskripsi'.text.size(16).bold.make(),
+        4.heightBox,
+        HStack(state.model.category
+            .map((e) => VxBox(child: e.text.color(colorName.white).make())
+                .color(colorName.grey)
+                .p4
+                .rounded
+                .make()
+                .pOnly(right: 4))
+            .toList()),
+      ]).py16(),
+      VStack([
+        'Type Produk'.text.bold.make(),
         8.heightBox,
         BlocBuilder<CheckCategoryCubit, CheckCategoryState>(
-          builder: (context, categoryState) {
-            return HStack(state.model.category!
+          builder: (context, typeState) {
+            return HStack(state.model.type!
                 .map((e) => VxBox(
                             child: e.text
-                                .color(
-                                    (categoryState as CheckCategoryIsSelected)
-                                            .selectedCategory
-                                            .contains(e)
-                                        ? colorName.white
-                                        : colorName.black)
+                                .color((typeState as CheckCategoryIsSelected)
+                                        .selectedCategory
+                                        .contains(e)
+                                    ? colorName.white
+                                    : colorName.black)
                                 .make())
-                        .color(categoryState.selectedCategory.contains(e)
+                        .color(typeState.selectedCategory.contains(e)
                             ? colorName.secondary
                             : colorName.white)
                         .border(
-                            color: categoryState.selectedCategory.contains(e)
+                            color: typeState.selectedCategory.contains(e)
                                 ? colorName.white
                                 : colorName.grey)
                         .p16

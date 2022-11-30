@@ -10,7 +10,7 @@ class WishlistCubit extends Cubit<WishlistState> {
   WishlistCubit(this.checkSavedCubit) : super(WishlistInitial());
 
   void addToWishList(ProductModel model) async {
-    final result = await ProductService().addToWishList(model);
+    final result = await ProductService().addToWishlist(model);
     emit(result.fold((l) => WishlistIsFailed(l), (r) {
       checkSavedCubit.checkWishList(model.id!);
       return WishlistIsSuccess(r);
