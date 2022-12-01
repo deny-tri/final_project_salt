@@ -168,6 +168,8 @@ class HomeScreens extends StatelessWidget {
                 [
                   IconButton(
                     onPressed: () {
+                      BlocProvider.of<CheckboxCartCubit>(context)
+                          .removeAllCheckBox();
                       context.go(routeName.cartPath);
                     },
                     icon: const Icon(

@@ -53,10 +53,10 @@ class UserServices {
 
   Future<Either<String, UserModel>> changeProfile(UserModel userData) async {
     try {
-      String uid = await Commons().getUID();
+      String? uid = await Commons().getUID();
       final newPhoto = await Commons().getImage();
       String downloadUrl =
-          await Commons().uploadFile(uid, newPhoto, fileName: uid);
+          await Commons().uploadFile(uid!, newPhoto, fileName: uid);
       if (downloadUrl.isNotEmpty) {
         usersCollection
             .doc(uid)
