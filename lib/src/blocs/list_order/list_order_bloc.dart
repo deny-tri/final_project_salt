@@ -8,7 +8,7 @@ part 'list_order_state.dart';
 
 class ListOrderBloc extends Bloc<ListOrderEvent, ListOrderState> {
   ListOrderBloc() : super(ListOrderInitial()) {
-    on<ListOrderEvent>((event, emit) async {
+    on<FetchListOrder>((event, emit) async {
       emit(ListOrderIsLoading());
       final result = await OrderServices().fetchListOrder();
       emit(result.fold(

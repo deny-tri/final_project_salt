@@ -6,7 +6,7 @@ class OrderServices {
 
   Future<Either<String, List<OrderModel>>> fetchListOrder() async {
     try {
-      String uid = await Commons().getUID();
+      String? uid = await Commons().getUID();
       final querySnapshot =
           await orderCollection.where('uid', isEqualTo: uid).get();
       final data =

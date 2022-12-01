@@ -123,7 +123,7 @@ class DetailScreen extends StatelessWidget {
         8.heightBox,
         BlocBuilder<CheckCategoryCubit, CheckCategoryState>(
           builder: (context, typeState) {
-            return HStack(state.model.type!
+            return HStack(state.model.type
                 .map((e) => VxBox(
                             child: e.text
                                 .color((typeState as CheckCategoryIsSelected)

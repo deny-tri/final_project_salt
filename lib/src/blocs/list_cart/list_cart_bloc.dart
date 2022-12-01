@@ -18,13 +18,20 @@ class ListCartBloc extends Bloc<ListCartEvent, ListCartState> {
         final retrainData = <ProductModel>[];
         retrainData.addAll(r);
         final dataFiltered = <String>{};
-        retrainData.retainWhere((x) => dataFiltered.add(x.category![0]));
+        retrainData.retainWhere((x) => dataFiltered.add(x.category[0]));
         return ListCartIsSuccess(data, retrainData);
       }));
     });
     on<DecrementCart>((event, emit) async {
       emit(ListCartIsLoading());
       final result = await ProductService().removeCartItemCount(event.data);
+      result.fold((l) => emit(ListCartIsFailed(l)), (r) {
+        add(FetchListCart());
+      });
+    });
+    on<RemoveCartAfterOrder>((event, emit) async {
+      emit(ListCartIsLoading());
+      final result = await ProductService().removeFromCart(event.models);
       result.fold((l) => emit(ListCartIsFailed(l)), (r) {
         add(FetchListCart());
       });
