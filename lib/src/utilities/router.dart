@@ -77,8 +77,6 @@ final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
         GoRoute(
           path: routeName.profile,
           builder: (context, state) {
-            BlocProvider.of<ListOrderBloc>(context).add(FetchListOrder());
-            BlocProvider.of<ListWishlistBloc>(context).add(FetchListWishlist());
             return const ProfileScreens();
           },
         ),
