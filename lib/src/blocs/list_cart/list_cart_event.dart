@@ -10,3 +10,9 @@ class DecrementCart extends ListCartEvent {
 
   DecrementCart(this.data);
 }
+
+class RemoveCartAfterOrder extends ListCartEvent {
+  final List<ProductModel> models;
+
+  RemoveCartAfterOrder(this.models);
+}

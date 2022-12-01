@@ -45,7 +45,7 @@ class ProductService {
 
   Future<Either<String, String>> addToCart(ProductModel model) async {
     try {
-      String uid = await Commons().getUID();
+      String? uid = await Commons().getUID();
       final doc = await usersCollection
           .doc(uid)
           .collection(cartCollectionName)
@@ -63,9 +63,28 @@ class ProductService {
     }
   }
 
+  Future<Either<String, String>> removeFromCart(
+      List<ProductModel> models) async {
+    try {
+      String? uid = await Commons().getUID();
+
+      for (var element in models) {
+        await usersCollection
+            .doc(uid)
+            .collection(cartCollectionName)
+            .doc(element.id)
+            .delete();
+      }
+
+      return right('Berhasil Memasukkan Ke Keranjang');
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
   Future<Either<String, List<ProductModel>>> fetchListCart() async {
     try {
-      String uid = await Commons().getUID();
+      String? uid = await Commons().getUID();
       final querySnapshot =
           await usersCollection.doc(uid).collection(cartCollectionName).get();
 
@@ -83,14 +102,14 @@ class ProductService {
 
   Future<Either<String, int>> getCartItemCount() async {
     try {
-      String uid = await Commons().getUID();
+      String? uid = await Commons().getUID();
       final querySnapshot =
           await usersCollection.doc(uid).collection(cartCollectionName).get();
       final data = querySnapshot.docs
           .map((e) => ProductModel.fromMap(e.data()))
           .toList();
       final dataFiltered = <dynamic>{};
-      data.retainWhere((x) => dataFiltered.add(x.category![0]));
+      data.retainWhere((x) => dataFiltered.add(x.category[0]));
       return right(dataFiltered.length);
     } catch (e) {
       return left(e.toString());
@@ -99,7 +118,7 @@ class ProductService {
 
   Future<Either<String, String>> removeCartItemCount(ProductModel model) async {
     try {
-      String uid = await Commons().getUID();
+      String? uid = await Commons().getUID();
 
       await usersCollection
           .doc(uid)
@@ -115,7 +134,7 @@ class ProductService {
 
   Future<Either<String, String>> addToWishlist(ProductModel model) async {
     try {
-      String uid = await Commons().getUID();
+      String? uid = await Commons().getUID();
       usersCollection
           .doc(uid)
           .collection(wishListCollectionName)
@@ -130,7 +149,7 @@ class ProductService {
 
   Future<Either<String, String>> removeFromWishlist(String id) async {
     try {
-      String uid = await Commons().getUID();
+      String? uid = await Commons().getUID();
       usersCollection
           .doc(uid)
           .collection(wishListCollectionName)
@@ -145,7 +164,7 @@ class ProductService {
 
   Future<Either<String, bool>> checkWishList(String id) async {
     try {
-      String uid = await Commons().getUID();
+      String? uid = await Commons().getUID();
       final querySnapshot = await usersCollection
           .doc(uid)
           .collection(wishListCollectionName)
@@ -160,7 +179,7 @@ class ProductService {
 
   Future<Either<String, List<ProductModel>>> fetchListWishlist() async {
     try {
-      String uid = await Commons().getUID();
+      String? uid = await Commons().getUID();
       final querySnapshot = await usersCollection
           .doc(uid)
           .collection(wishListCollectionName)
@@ -175,7 +194,3 @@ class ProductService {
     }
   }
 }
-
-//Query Snapshot => banyak document
-
-//Document Snapshot => satu document

@@ -63,54 +63,30 @@ class HomeScreens extends StatelessWidget {
   Widget _buildMenuHome(BuildContext context) {
     return HStack(
       [
-        VStack(
-          [
-            IconButton(
-              onPressed: () {
-                context.go(routeName.profilePath);
-              },
-              icon: const Icon(
-                Icons.person,
-                color: colorName.accentRed,
-              ),
+        VStack([
+          IconButton(
+            onPressed: () {
+              context.go(routeName.productPath);
+            },
+            icon: const Icon(
+              Icons.shopping_bag_rounded,
+              color: colorName.accentRed,
             ),
-            'Profile'.text.bold.color(colorName.black).makeCentered(),
-            IconButton(
-              onPressed: () {
-                context.go(routeName.adminPath);
-              },
-              icon: const Icon(
-                Icons.person,
-                color: colorName.accentRed,
-              ),
+          ),
+          'Product'.text.bold.color(colorName.black).makeCentered(),
+        ]),
+        VStack([
+          IconButton(
+            onPressed: () {
+              context.go(routeName.wishlistPath);
+            },
+            icon: const Icon(
+              Icons.favorite_border_rounded,
+              color: colorName.accentRed,
             ),
-            'Add Product'.text.bold.color(colorName.black).makeCentered()
-          ],
-        ).p16(),
-        VStack(
-          [
-            IconButton(
-              onPressed: () {
-                context.go(routeName.productPath);
-              },
-              icon: const Icon(
-                Icons.shopping_bag_rounded,
-                color: colorName.accentRed,
-              ),
-            ),
-            'Product'.text.bold.color(colorName.black).makeCentered(),
-            IconButton(
-              onPressed: () {
-                context.go(routeName.wishlistPath);
-              },
-              icon: const Icon(
-                Icons.favorite_border_rounded,
-                color: colorName.accentRed,
-              ),
-            ),
-            'Favorite'.text.bold.color(colorName.black).makeCentered()
-          ],
-        ).p16(),
+          ),
+          'Favorite'.text.bold.color(colorName.black).makeCentered(),
+        ]),
         VStack(
           [
             IconButton(
@@ -125,15 +101,16 @@ class HomeScreens extends StatelessWidget {
             ),
             'Dark Theme'.text.bold.color(colorName.black).makeCentered()
           ],
-        ).p16(),
+        )
       ],
       alignment: MainAxisAlignment.spaceBetween,
       axisSize: MainAxisSize.max,
     )
+        .p16()
         .box
         .outerShadow
         .color(colorName.white)
-        .size(context.safePercentWidth * 100, context.safePercentHeight * 20)
+        .size(context.safePercentWidth * 100, context.safePercentHeight * 15)
         .make();
   }
 
@@ -168,11 +145,13 @@ class HomeScreens extends StatelessWidget {
                 [
                   IconButton(
                     onPressed: () {
+                      BlocProvider.of<CheckboxCartCubit>(context)
+                          .removeAllCheckBox();
                       context.go(routeName.cartPath);
                     },
                     icon: const Icon(
                       Icons.shopping_cart_outlined,
-                      color: colorName.black,
+                      color: colorName.accentRed,
                     ),
                   ),
                   (state as CartCountIsSuccess).value != 0
@@ -219,25 +198,12 @@ class HomeScreens extends StatelessWidget {
         }
         if (state is ListProductIsSuccess) {
           final data = state.products;
-          // return ListView.builder(
-          //   shrinkWrap: true,
-          //   scrollDirection: Axis.horizontal,
-          //   itemCount: data.length,
-          //   itemBuilder: (context, index) =>
-          //       ProductHome(productHome: data[index]),
-          // );
           return GridView.builder(
             scrollDirection: Axis.horizontal,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
               mainAxisExtent: 150.0,
             ),
-            // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            //   crossAxisCount: 2,
-            //   crossAxisSpacing: 16,
-            //   scrollDirection: Axis.horizontal,
-            //   mainAxisSpacing: 16,
-
             itemCount: data.length,
             itemBuilder: (context, index) {
               return ProductHome(

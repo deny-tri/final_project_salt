@@ -13,14 +13,15 @@ class CartScreen extends StatelessWidget {
             return BlocBuilder<CheckboxCartCubit, CheckboxCartState>(
               builder: (context, checkState) {
                 if (checkState is CheckboxCartIsChecked) {
-                  List tempList = <ProductModel>[];
+                  List<ProductModel> tempList = <ProductModel>[];
+                  tempList.clear();
 
                   double cartTotalPrice() {
                     double total = 0;
 
                     for (var item in checkState.model) {
                       for (var u in state.data) {
-                        if (u.category![0] == item.category![0]) {
+                        if (u.type[0] == item.type[0]) {
                           tempList.add(u);
                           total += item.price!;
                         }
@@ -29,20 +30,22 @@ class CartScreen extends StatelessWidget {
                     return total;
                   }
 
-                  return HStack([
-                    VStack([
-                      'Total,\n'.richText.withTextSpanChildren([
-                        Commons()
-                            .setPriceToIDR(cartTotalPrice())
-                            .textSpan
-                            .size(16)
-                            .bold
-                            .make()
-                      ]).make(),
-                    ]).expand(),
+                  return VStack([
+                    'Total,\n'.richText.withTextSpanChildren([
+                      Commons()
+                          .setPriceToIDR(cartTotalPrice())
+                          .textSpan
+                          .size(16)
+                          .bold
+                          .make()
+                    ]).make(),
                     BlocListener<OrderBloc, OrderState>(
                       listener: (context, orderState) {
                         if (orderState is OrderIsSuccess) {
+                          BlocProvider.of<ListCartBloc>(context)
+                              .add(RemoveCartAfterOrder(tempList));
+                          BlocProvider.of<CheckboxCartCubit>(context)
+                              .removeAllCheckBox();
                           Commons().showSnackBar(context, orderState.message);
                         }
                         if (orderState is OrderIsFailed) {
@@ -84,10 +87,18 @@ class CartScreen extends StatelessWidget {
         },
       ),
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: colorName.white,
-        title: 'Keranjang'.text.color(colorName.black).make(),
-        iconTheme: const IconThemeData(color: colorName.black),
+        title: 'My Cart'.text.color(colorName.accentRed).makeCentered(),
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            context.go(routeName.home);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: colorName.accentRed,
+          ),
+        ),
+        elevation: 0,
         actions: [
           BlocBuilder<ListCartBloc, ListCartState>(
             builder: (context, state) {
@@ -139,7 +150,7 @@ class CartScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 List tempList = <ProductModel>[];
                 for (var u in data) {
-                  if (u.category![0] == state.retrainData[index].category![0]) {
+                  if (u.category[0] == state.retrainData[index].category[0]) {
                     tempList.add(u);
                   }
                 }
@@ -196,7 +207,7 @@ class CartScreen extends StatelessWidget {
                               .size(12)
                               .make(),
                           4.heightBox,
-                          state.retrainData[index].category![0].text
+                          state.retrainData[index].category[0].text
                               .size(12)
                               .make()
                               .pSymmetric(h: 12, v: 6)
@@ -231,7 +242,7 @@ class CartScreen extends StatelessWidget {
                                       .onTap(() {
                                 BlocProvider.of<AddToCartBloc>(context).add(
                                     AddToCart(state.retrainData[index],
-                                        state.retrainData[index].category![0]));
+                                        state.retrainData[index].category[0]));
                               }),
                             )
                           ])
@@ -241,7 +252,10 @@ class CartScreen extends StatelessWidget {
                       BlocListener<ListCartBloc, ListCartState>(
                         listener: (context, state) {},
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              //  BlocProvider.of<WishlistCubit>(context)
+                              // .removeFromWishList(data.id!);
+                            },
                             icon: const Icon(
                               Icons.delete_outline,
                               color: colorName.accentRed,

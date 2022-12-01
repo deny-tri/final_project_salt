@@ -11,9 +11,9 @@ class Commons {
     await storage.setString(myUID, uid);
   }
 
-  Future<String> getUID() async {
+  Future<String?> getUID() async {
     final storage = await prefs;
-    return storage.getString(myUID)!;
+    return storage.getString(myUID);
   }
 
   Future<bool> removeUID() async {

@@ -30,7 +30,7 @@ class _AdminScreensState extends State<AdminScreens> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: 'Add Products'.text.color(colorName.black).makeCentered(),
+          title: 'Add Products'.text.color(colorName.accentRed).makeCentered(),
           backgroundColor: Colors.transparent,
           leading: IconButton(
             onPressed: () {
@@ -38,7 +38,7 @@ class _AdminScreensState extends State<AdminScreens> {
             },
             icon: const Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.black,
+              color: colorName.accentRed,
             ),
           ),
           elevation: 0,
@@ -47,7 +47,7 @@ class _AdminScreensState extends State<AdminScreens> {
               onPressed: () {},
               icon: const Icon(
                 Icons.shopping_cart_outlined,
-                color: Colors.black,
+                color: colorName.accentRed,
               ),
             )
           ],
@@ -91,22 +91,27 @@ class _AdminScreensState extends State<AdminScreens> {
         controller: productNameController,
         title: 'Product Name',
       ),
+      6.heightBox,
       TextAdmin(
         controller: productPriceController,
         title: 'Product Price',
       ),
+      6.heightBox,
       TextAdmin(
         controller: productDescController,
         title: 'Product Description',
       ),
+      6.heightBox,
       TextAdmin(
         controller: productCategoryController,
         title: 'Product Category',
       ),
+      6.heightBox,
       TextAdmin(
         controller: productTypeController,
         title: 'Product Type',
       ),
+      6.heightBox,
       TextAdmin(
         controller: productStockController,
         title: 'Product Stock',
