@@ -21,3 +21,4 @@ part 'detail_product_screens.dart';
 part 'profile_screens.dart';
 part 'product_screens.dart';
 part 'cart_screens.dart';
+part 'histori_screens.dart';

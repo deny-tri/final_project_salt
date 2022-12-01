@@ -194,7 +194,3 @@ class ProductService {
     }
   }
 }
-
-//Query Snapshot => banyak document
-
-//Document Snapshot => satu document

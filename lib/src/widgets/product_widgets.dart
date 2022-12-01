@@ -7,28 +7,33 @@ class ProductWidgets extends StatelessWidget {
   const ProductWidgets({super.key, required this.products});
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: VStack(
-        [
-          GestureDetector(
-            onTap: () {
-              context.go(routeName.detailPath, extra: products.id);
-            },
-            child: VxBox(
-              child: Image(
-                image: NetworkImage(products.picture![0]),
-              ),
-            )
-                .size(context.safePercentWidth * 100,
-                    context.safePercentHeight * 10)
-                .makeCentered(),
+    return VStack([
+      GestureDetector(
+        onTap: () {
+          context.go(routeName.detailPath, extra: products.id);
+        },
+        child: AspectRatio(
+          aspectRatio: 14 / 10,
+          child: Image(
+            image: NetworkImage(products.picture![0]),
           ),
-          products.name!.text.bodyText1(context).make(),
-          products.price!.text.bodyText1(context).make(),
-        ],
+        ),
       ),
-    );
+      products.name!.text.color(colorName.black).bodyText1(context).make(),
+      Commons()
+          .setPriceToIDR(products.price!)
+          .text
+          .color(colorName.black)
+          .bodyText1(context)
+          .make(),
+    ])
+        .p12()
+        .box
+        .shadowOutline(outlineColor: colorName.accentRed)
+        .white
+        .rounded
+        .margin(Vx.m8)
+        .make();
   }
 }
 
@@ -41,31 +46,32 @@ class ProductHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: VStack(
-        [
-          GestureDetector(
-            onTap: () {
-              context.go(routeName.detailPath, extra: productHome.id);
-            },
-            child: AspectRatio(
-              aspectRatio: 19 / 9,
-              child: Image(
-                image: NetworkImage(productHome.picture![0]),
-              ),
-            ).p8(),
+    return VStack([
+      GestureDetector(
+        onTap: () {
+          context.go(routeName.detailPath, extra: productHome.id);
+        },
+        child: AspectRatio(
+          aspectRatio: 14 / 10,
+          child: Image(
+            image: NetworkImage(productHome.picture![0]),
           ),
-          productHome.name!.text
-              .color(colorName.black)
-              .bodyText1(context)
-              .makeCentered(),
-          productHome.price!.text
-              .color(colorName.black)
-              .bodyText1(context)
-              .makeCentered(),
-        ],
-      ).box.outerShadow.white.margin(Vx.m12).make(),
-    );
+        ),
+      ),
+      productHome.name!.text.color(colorName.black).bodyText1(context).make(),
+      Commons()
+          .setPriceToIDR(productHome.price!)
+          .text
+          .color(colorName.black)
+          .bodyText1(context)
+          .make(),
+    ])
+        .p12()
+        .box
+        .shadowOutline(outlineColor: colorName.accentRed)
+        .white
+        .rounded
+        .margin(Vx.m8)
+        .make();
   }
 }

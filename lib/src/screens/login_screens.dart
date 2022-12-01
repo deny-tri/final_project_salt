@@ -30,13 +30,13 @@ class _LoginScreensState extends State<LoginScreens> {
             child: VStack(
               [
                 Center(
-                    // child: Image.asset(
-                    //   "assets/images/logo.jpeg",
-                    //   fit: BoxFit.cover,
-                    //   width: 100,
-                    //   height: 100,
-                    // ),
-                    ),
+                  child: Image.asset(
+                    "assets/images/logo.jpeg",
+                    fit: BoxFit.cover,
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
                 16.heightBox,
                 _buildLoginForm(),
               ],

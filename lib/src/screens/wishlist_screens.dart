@@ -6,9 +6,65 @@ class WishListScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: 'Wish List'.text.color(colorName.accentRed).makeCentered(),
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            context.go(routeName.home);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: colorName.accentRed,
+          ),
+        ),
+        elevation: 0,
+        actions: [
+          BlocBuilder<CartCountCubit, CartCountState>(
+            builder: (context, state) {
+              return ZStack(
+                [
+                  IconButton(
+                    onPressed: () {
+                      context.go(routeName.cartPath);
+                    },
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: colorName.accentRed,
+                    ),
+                  ),
+                  (state as CartCountIsSuccess).value != 0
+                      ? VxBox(
+                              child: state.value.text
+                                  .size(8)
+                                  .white
+                                  .makeCentered()
+                                  .p4())
+                          .roundedFull
+                          .color(colorName.accentRed)
+                          .make()
+                          .positioned(right: 8, top: 2)
+                      : 0.heightBox
+                ],
+                alignment: Alignment.topRight,
+              );
+            },
+          )
+        ],
+      ),
       body: SafeArea(
-        child: BlocBuilder<ListWishlistBloc, ListWishlistState>(
+        child: BlocConsumer<ListWishlistBloc, ListWishlistState>(
+          listener: (context, state) {
+            if (state is ListWishlistIsFailed) {
+              Commons().showSnackBar(context, state.message);
+            }
+          },
           builder: (context, state) {
+            if (state is ListWishlistIsLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             if (state is ListWishlistIsSuccess && state.data.isNotEmpty) {
               return ListView.separated(
                 separatorBuilder: (context, index) =>
@@ -50,14 +106,15 @@ class WishListScreens extends StatelessWidget {
                             }
                           },
                           child: IconButton(
-                              onPressed: () {
-                                BlocProvider.of<WishlistCubit>(context)
-                                    .removeFromWishList(data.id!);
-                              },
-                              icon: const Icon(
-                                Icons.delete_outline,
-                                color: colorName.accentRed,
-                              )),
+                            onPressed: () {
+                              BlocProvider.of<WishlistCubit>(context)
+                                  .removeFromWishList(data.id!);
+                            },
+                            icon: const Icon(
+                              Icons.delete_outline,
+                              color: colorName.accentRed,
+                            ),
+                          ),
                         )
                       ],
                       alignment: MainAxisAlignment.start,
@@ -76,7 +133,7 @@ class WishListScreens extends StatelessWidget {
                     .makeCentered(),
                 8.heightBox,
                 ButtonWidget(
-                    color: colorName.accentBlue,
+                    color: colorName.accentRed,
                     text: 'Cari Produk',
                     onPressed: () {
                       context.go(routeName.productPath);

@@ -17,6 +17,8 @@ mixin routeName {
   static const cartPath = '/home/cart';
   static const wistlist = 'wistlist';
   static const wishlistPath = '/home/wistlist';
+  static const histori = 'histori';
+  static const historiPath = '/home/histori';
 }
 
 final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
@@ -54,7 +56,7 @@ final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
         BlocProvider.of<UserBloc>(context).add(LoadUserData());
         BlocProvider.of<CartCountCubit>(context).getCartCount();
         BlocProvider.of<ListProductBloc>(context).add(FetchListProduct());
-        return HomeScreens();
+        return const HomeScreens();
       },
       routes: [
         GoRoute(
@@ -62,6 +64,14 @@ final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
           builder: (context, state) {
             BlocProvider.of<ListCartBloc>(context).add(FetchListCart());
             return const CartScreen();
+          },
+        ),
+        GoRoute(
+          path: routeName.histori,
+          builder: (context, state) {
+            BlocProvider.of<ListOrderBloc>(context).add(FetchListOrder());
+            BlocProvider.of<ListWishlistBloc>(context).add(FetchListWishlist());
+            return const HistoriScreens();
           },
         ),
         GoRoute(
@@ -84,6 +94,9 @@ final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
         GoRoute(
             path: routeName.wistlist,
             builder: (context, state) {
+              BlocProvider.of<ListOrderBloc>(context).add(FetchListOrder());
+              BlocProvider.of<ListWishlistBloc>(context)
+                  .add(FetchListWishlist());
               return const WishListScreens();
             }),
         GoRoute(

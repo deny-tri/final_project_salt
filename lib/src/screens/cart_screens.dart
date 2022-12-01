@@ -30,17 +30,15 @@ class CartScreen extends StatelessWidget {
                     return total;
                   }
 
-                  return HStack([
-                    VStack([
-                      'Total,\n'.richText.withTextSpanChildren([
-                        Commons()
-                            .setPriceToIDR(cartTotalPrice())
-                            .textSpan
-                            .size(16)
-                            .bold
-                            .make()
-                      ]).make(),
-                    ]).expand(),
+                  return VStack([
+                    'Total,\n'.richText.withTextSpanChildren([
+                      Commons()
+                          .setPriceToIDR(cartTotalPrice())
+                          .textSpan
+                          .size(16)
+                          .bold
+                          .make()
+                    ]).make(),
                     BlocListener<OrderBloc, OrderState>(
                       listener: (context, orderState) {
                         if (orderState is OrderIsSuccess) {
@@ -89,10 +87,18 @@ class CartScreen extends StatelessWidget {
         },
       ),
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: colorName.white,
-        title: 'Keranjang'.text.color(colorName.black).make(),
-        iconTheme: const IconThemeData(color: colorName.black),
+        title: 'My Cart'.text.color(colorName.accentRed).makeCentered(),
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            context.go(routeName.home);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: colorName.accentRed,
+          ),
+        ),
+        elevation: 0,
         actions: [
           BlocBuilder<ListCartBloc, ListCartState>(
             builder: (context, state) {
@@ -246,7 +252,10 @@ class CartScreen extends StatelessWidget {
                       BlocListener<ListCartBloc, ListCartState>(
                         listener: (context, state) {},
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              //  BlocProvider.of<WishlistCubit>(context)
+                              // .removeFromWishList(data.id!);
+                            },
                             icon: const Icon(
                               Icons.delete_outline,
                               color: colorName.accentRed,

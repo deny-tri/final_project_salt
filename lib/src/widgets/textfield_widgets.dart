@@ -74,8 +74,8 @@ class _TextAdminState extends State<TextAdmin> {
     return TextField(
       controller: widget.controller,
       decoration: InputDecoration(
-        hintText: widget.title,
-      ),
+          hintText: widget.title,
+          hintStyle: const TextStyle(fontSize: 14, color: colorName.black)),
     ).pSymmetric(h: 12).box.white.withRounded(value: 10).make();
   }
 }

@@ -12,8 +12,8 @@ class ListWishlistBloc extends Bloc<ListWishlistEvent, ListWishlistState> {
       emit(ListWishlistIsLoading());
       final result = await ProductService().fetchListWishlist();
 
-      emit(result.fold(
-          (l) => ListWishlistIsFailed(l), (r) => ListWishlistIsSuccess(r)));
+      emit(result.fold((l) => ListWishlistIsFailed(message: l),
+          (r) => ListWishlistIsSuccess(data: r)));
     });
   }
 }

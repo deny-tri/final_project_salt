@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'list_wishlist_bloc.dart';
 
 @immutable
@@ -9,12 +10,14 @@ class ListWishlistIsLoading extends ListWishlistState {}
 
 class ListWishlistIsSuccess extends ListWishlistState {
   final List<ProductModel> data;
-
-  ListWishlistIsSuccess(this.data);
+  ListWishlistIsSuccess({
+    required this.data,
+  });
 }
 
 class ListWishlistIsFailed extends ListWishlistState {
   final String message;
-
-  ListWishlistIsFailed(this.message);
+  ListWishlistIsFailed({
+    required this.message,
+  });
 }

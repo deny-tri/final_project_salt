@@ -7,9 +7,50 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: colorName.white,
-        iconTheme: const IconThemeData(color: colorName.black),
+        title: 'Detail Product'.text.color(colorName.accentRed).makeCentered(),
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            context.go(routeName.home);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: colorName.accentRed,
+          ),
+        ),
+        elevation: 0,
+        actions: [
+          BlocBuilder<CartCountCubit, CartCountState>(
+            builder: (context, state) {
+              return ZStack(
+                [
+                  IconButton(
+                    onPressed: () {
+                      context.go(routeName.cartPath);
+                    },
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: colorName.accentRed,
+                    ),
+                  ),
+                  (state as CartCountIsSuccess).value != 0
+                      ? VxBox(
+                              child: state.value.text
+                                  .size(8)
+                                  .white
+                                  .makeCentered()
+                                  .p4())
+                          .roundedFull
+                          .color(colorName.accentRed)
+                          .make()
+                          .positioned(right: 8, top: 2)
+                      : 0.heightBox
+                ],
+                alignment: Alignment.topRight,
+              );
+            },
+          )
+        ],
       ),
       bottomNavigationBar: BlocBuilder<DetailProductsBloc, DetailProductsState>(
         builder: (context, state) {
