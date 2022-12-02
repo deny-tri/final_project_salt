@@ -7,7 +7,11 @@ class ProductScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: 'Products'.text.color(colorName.accentRed).makeCentered(),
+        title: 'Products'
+            .text
+            .color(colorName.accentRed)
+            .fontFamily('Poppins')
+            .makeCentered(),
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {

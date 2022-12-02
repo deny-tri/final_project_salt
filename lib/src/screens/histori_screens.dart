@@ -36,6 +36,7 @@ class HistoriScreens extends StatelessWidget {
                   (state as CartCountIsSuccess).value != 0
                       ? VxBox(
                               child: state.value.text
+                                  .color(colorName.black)
                                   .size(8)
                                   .white
                                   .makeCentered()
@@ -64,6 +65,7 @@ class HistoriScreens extends StatelessWidget {
                   return VStack([
                     HStack([
                       listOrderState.model[index].productName!.text
+                          .color(colorName.black)
                           .make()
                           .expand(),
                       (listOrderState.model[index].paymentStatus! == 0
@@ -94,12 +96,13 @@ class HistoriScreens extends StatelessWidget {
                                   .roundedSM
                                   .make(),
                               4.widthBox,
-                              e.name!.text.make(),
+                              e.name!.text.color(colorName.black).make(),
                             ]).py4())
                         .toList()),
                     16.heightBox,
                     'Total: ${Commons().setPriceToIDR(listOrderState.model[index].totalPrice!)}'
                         .text
+                        .color(colorName.black)
                         .bold
                         .make()
                         .objectBottomRight(),

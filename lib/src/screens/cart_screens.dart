@@ -31,11 +31,17 @@ class CartScreen extends StatelessWidget {
                   }
 
                   return VStack([
-                    'Total,\n'.richText.withTextSpanChildren([
+                    'Total,\n'
+                        .richText
+                        .fontFamily('Poppins')
+                        .color(colorName.black)
+                        .withTextSpanChildren([
                       Commons()
                           .setPriceToIDR(cartTotalPrice())
                           .textSpan
+                          .color(colorName.black)
                           .size(16)
+                          .fontFamily('Poppins')
                           .bold
                           .make()
                     ]).make(),
@@ -87,7 +93,11 @@ class CartScreen extends StatelessWidget {
         },
       ),
       appBar: AppBar(
-        title: 'My Cart'.text.color(colorName.accentRed).makeCentered(),
+        title: 'My Cart'
+            .text
+            .color(colorName.accentRed)
+            .fontFamily('Poppins')
+            .makeCentered(),
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
@@ -116,6 +126,7 @@ class CartScreen extends StatelessWidget {
                                       .containsAll(state.retrainData))
                                   ? colorName.accentRed
                                   : colorName.accentBlue)
+                              .fontFamily('Poppins')
                               .makeCentered()
                               .pOnly(right: 16)
                               .onTap(() {
@@ -197,6 +208,7 @@ class CartScreen extends StatelessWidget {
                       VStack(
                         [
                           state.retrainData[index].name!.text
+                              .color(colorName.black)
                               .size(16)
                               .bold
                               .make(),
@@ -204,10 +216,12 @@ class CartScreen extends StatelessWidget {
                           Commons()
                               .setPriceToIDR(state.retrainData[index].price!)
                               .text
+                              .color(colorName.black)
                               .size(12)
                               .make(),
                           4.heightBox,
                           state.retrainData[index].category[0].text
+                              .color(colorName.black)
                               .size(12)
                               .make()
                               .pSymmetric(h: 12, v: 6)
@@ -215,52 +229,47 @@ class CartScreen extends StatelessWidget {
                               .color(colorName.grey.withOpacity(.1))
                               .make(),
                           4.heightBox,
-                          HStack([
-                            const Icon(Icons.remove_circle_outline_rounded)
-                                .onTap(() {
-                              BlocProvider.of<ListCartBloc>(context)
-                                  .add(DecrementCart(state.retrainData[index]));
-                            }),
-                            4.widthBox,
-                            tempList.length.text
-                                .size(12)
-                                .make()
-                                .pSymmetric(h: 12, v: 6)
-                                .box
-                                .color(colorName.grey.withOpacity(.1))
-                                .make(),
-                            4.widthBox,
-                            BlocListener<AddToCartBloc, AddToCartState>(
-                              listener: (context, state) {
-                                if (state is AddToCartIsSuccess) {
-                                  BlocProvider.of<ListCartBloc>(context)
-                                      .add(FetchListCart());
-                                }
-                              },
-                              child:
-                                  const Icon(Icons.add_circle_outline_rounded)
-                                      .onTap(() {
-                                BlocProvider.of<AddToCartBloc>(context).add(
-                                    AddToCart(state.retrainData[index],
-                                        state.retrainData[index].category[0]));
-                              }),
-                            )
-                          ])
                         ],
                         alignment: MainAxisAlignment.start,
                       ).expand(),
-                      BlocListener<ListCartBloc, ListCartState>(
-                        listener: (context, state) {},
-                        child: IconButton(
-                            onPressed: () {
-                              //  BlocProvider.of<WishlistCubit>(context)
-                              // .removeFromWishList(data.id!);
+                      HStack(
+                        [
+                          const Icon(
+                            Icons.remove_circle_outline_rounded,
+                            color: colorName.black,
+                          ).onTap(() {
+                            BlocProvider.of<ListCartBloc>(context)
+                                .add(DecrementCart(state.retrainData[index]));
+                          }),
+                          4.widthBox,
+                          tempList.length.text
+                              .color(colorName.black)
+                              .size(12)
+                              .make()
+                              .pSymmetric(h: 12, v: 6)
+                              .box
+                              .color(colorName.black.withOpacity(.1))
+                              .make(),
+                          4.widthBox,
+                          BlocListener<AddToCartBloc, AddToCartState>(
+                            listener: (context, state) {
+                              if (state is AddToCartIsSuccess) {
+                                BlocProvider.of<ListCartBloc>(context)
+                                    .add(FetchListCart());
+                              }
                             },
-                            icon: const Icon(
-                              Icons.delete_outline,
-                              color: colorName.accentRed,
-                            )),
-                      )
+                            child: const Icon(
+                              Icons.add_circle_outline_rounded,
+                              color: colorName.black,
+                            ).onTap(() {
+                              BlocProvider.of<AddToCartBloc>(context).add(
+                                  AddToCart(state.retrainData[index],
+                                      state.retrainData[index].category[0]));
+                            }),
+                          )
+                        ],
+                      ),
+                      // )
                     ],
                     alignment: MainAxisAlignment.start,
                   ).p16(),

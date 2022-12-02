@@ -27,7 +27,7 @@ class HomeScreens extends StatelessWidget {
                   24.heightBox,
                   _buildMenuHome(context),
                   24.heightBox,
-                  'Promo'.text.bold.make(),
+                  'Promo'.text.bold.fontFamily('Poppins').make(),
                   8.heightBox,
                   VxBox(
                     child: _buildListProduct(),
@@ -73,7 +73,12 @@ class HomeScreens extends StatelessWidget {
               color: colorName.accentRed,
             ),
           ),
-          'Product'.text.bold.color(colorName.black).makeCentered(),
+          'Product'
+              .text
+              .bold
+              .color(colorName.black)
+              .fontFamily('Poppins')
+              .makeCentered(),
         ]),
         VStack([
           IconButton(
@@ -85,7 +90,12 @@ class HomeScreens extends StatelessWidget {
               color: colorName.accentRed,
             ),
           ),
-          'Favorite'.text.bold.color(colorName.black).makeCentered(),
+          'Favorite'
+              .text
+              .bold
+              .color(colorName.black)
+              .fontFamily('Poppins')
+              .makeCentered(),
         ]),
         VStack(
           [
@@ -99,7 +109,12 @@ class HomeScreens extends StatelessWidget {
                 color: colorName.accentRed,
               ),
             ),
-            'Dark Theme'.text.bold.color(colorName.black).makeCentered()
+            'Dark Theme'
+                .text
+                .bold
+                .color(colorName.black)
+                .fontFamily('Poppins')
+                .makeCentered()
           ],
         )
       ],
@@ -135,6 +150,7 @@ class HomeScreens extends StatelessWidget {
                 .richText
                 .color(colorName.black)
                 .size(12)
+                .fontFamily('Poppins')
                 .withTextSpanChildren([
               data.username!.textSpan.bold.size(18).make(),
             ]).make(),
@@ -151,7 +167,7 @@ class HomeScreens extends StatelessWidget {
                     },
                     icon: const Icon(
                       Icons.shopping_cart_outlined,
-                      color: colorName.accentRed,
+                      color: colorName.black,
                     ),
                   ),
                   (state as CartCountIsSuccess).value != 0

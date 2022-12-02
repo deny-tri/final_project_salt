@@ -7,7 +7,11 @@ class WishListScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: 'Wish List'.text.color(colorName.accentRed).makeCentered(),
+        title: 'Wish List'
+            .text
+            .color(colorName.accentRed)
+            .fontFamily('Poppins')
+            .makeCentered(),
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
@@ -129,6 +133,7 @@ class WishListScreens extends StatelessWidget {
               [
                 "Belum ada data wishlist"
                     .text
+                    .fontFamily('Poppins')
                     .bodyText1(context)
                     .makeCentered(),
                 8.heightBox,

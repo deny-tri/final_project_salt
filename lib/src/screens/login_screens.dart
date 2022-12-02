@@ -64,7 +64,11 @@ class _LoginScreensState extends State<LoginScreens> {
           isPassword: true,
         ),
         8.heightBox,
-        'Forget Password?'.text.color(colorName.accentBlue).make(),
+        'Forget Password?'
+            .text
+            .color(colorName.accentBlue)
+            .fontFamily('Poppins')
+            .make(),
         16.heightBox,
         BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
@@ -83,11 +87,12 @@ class _LoginScreensState extends State<LoginScreens> {
         ),
         HStack(
           [
-            'Create new account?'.text.makeCentered(),
+            'Create new account?'.text.fontFamily('Poppins').makeCentered(),
             8.widthBox,
             'Register'
                 .text
                 .color(colorName.accentBlue)
+                .fontFamily('Poppins')
                 .makeCentered()
                 .onTap(() {
               context.go(routeName.register);
@@ -97,7 +102,7 @@ class _LoginScreensState extends State<LoginScreens> {
           axisSize: MainAxisSize.max,
         ),
         8.heightBox,
-        'Or Continue With'.text.bold.makeCentered(),
+        'Or Continue With'.text.bold.fontFamily('Poppins').makeCentered(),
         8.heightBox,
         IconButton(
           onPressed: () {
