@@ -7,7 +7,11 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: 'Detail Product'.text.color(colorName.accentRed).makeCentered(),
+        title: 'Detail Product'
+            .text
+            .color(colorName.accentRed)
+            .fontFamily('Poppins')
+            .makeCentered(),
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
@@ -36,6 +40,7 @@ class DetailScreen extends StatelessWidget {
                   (state as CartCountIsSuccess).value != 0
                       ? VxBox(
                               child: state.value.text
+                                  .fontFamily('Poppins')
                                   .size(8)
                                   .white
                                   .makeCentered()
@@ -143,15 +148,23 @@ class DetailScreen extends StatelessWidget {
         )
       ]),
       VStack([
-        'Deskripsi'.text.size(16).bold.make(),
+        'Deskripsi'.text.size(16).bold.fontFamily('Poppins').make(),
         4.heightBox,
-        state.model.description!.text.size(14).color(colorName.grey).make(),
+        state.model.description!.text
+            .size(14)
+            .fontFamily('Poppins')
+            .color(colorName.grey)
+            .make(),
       ]).py16(),
       VStack([
-        'Deskripsi'.text.size(16).bold.make(),
+        'Category'.text.size(16).bold.fontFamily('Poppins').make(),
         4.heightBox,
         HStack(state.model.category
-            .map((e) => VxBox(child: e.text.color(colorName.white).make())
+            .map((e) => VxBox(
+                    child: e.text
+                        .fontFamily('Poppins')
+                        .color(colorName.white)
+                        .make())
                 .color(colorName.grey)
                 .p4
                 .rounded
@@ -160,13 +173,14 @@ class DetailScreen extends StatelessWidget {
             .toList()),
       ]).py16(),
       VStack([
-        'Type Produk'.text.bold.make(),
+        'Type Produk'.text.bold.fontFamily('Poppins').make(),
         8.heightBox,
         BlocBuilder<CheckCategoryCubit, CheckCategoryState>(
           builder: (context, typeState) {
             return HStack(state.model.type
                 .map((e) => VxBox(
                             child: e.text
+                                .fontFamily('Poppins')
                                 .color((typeState as CheckCategoryIsSelected)
                                         .selectedCategory
                                         .contains(e)

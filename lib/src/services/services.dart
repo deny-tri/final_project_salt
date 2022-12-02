@@ -5,7 +5,6 @@ import 'package:dartz/dartz.dart';
 import 'package:final_project_salt/src/models/models.dart';
 import 'package:final_project_salt/src/utilities/utilities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 part 'user_services.dart';

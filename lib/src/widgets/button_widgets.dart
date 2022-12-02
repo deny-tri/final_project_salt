@@ -18,6 +18,7 @@ class ButtonWidget extends StatelessWidget {
       onPressed: isLoading! ? null : onPressed,
       style: ElevatedButton.styleFrom(
           backgroundColor: color,
+          textStyle: const TextStyle(fontFamily: 'Poppins'),
           elevation: 0.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

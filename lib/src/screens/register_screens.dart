@@ -49,16 +49,27 @@ class _RegisterScreensState extends State<RegisterScreens> {
           'Created New Account'
               .text
               .bold
+              .fontFamily('Poppins')
               .headline5(context)
               .color(colorName.white)
               .make(),
           'Enter your Email, Name and Password for sign up'
               .text
+              .fontFamily('Poppins')
               .color(colorName.white)
               .make(),
           HStack([
-            'for sign up. '.text.color(colorName.white).make(),
-            'Already Have Account'.text.color(Vx.red900).make().onTap(() {
+            'for sign up. '
+                .text
+                .color(colorName.white)
+                .fontFamily('Poppins')
+                .make(),
+            'Already Have Account'
+                .text
+                .color(Vx.red900)
+                .fontFamily('Poppins')
+                .make()
+                .onTap(() {
               context.go(routeName.login);
             })
           ]),
@@ -108,7 +119,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
           },
         ),
         8.heightBox,
-        'Or Connect With'.text.makeCentered(),
+        'Or Connect With'.text.fontFamily('Poppins').makeCentered(),
         IconButton(
           onPressed: () {
             // _authenticateWithGoogle(context);

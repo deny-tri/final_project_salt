@@ -40,6 +40,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   color: Colors.black,
                 ),
           hintText: widget.title,
+          hintStyle: const TextStyle(
+              fontSize: 14, color: colorName.black, fontFamily: 'Poppins'),
           suffixIcon: (widget.isPassword!)
               ? IconButton(
                   icon:
@@ -74,8 +76,10 @@ class _TextAdminState extends State<TextAdmin> {
     return TextField(
       controller: widget.controller,
       decoration: InputDecoration(
-          hintText: widget.title,
-          hintStyle: const TextStyle(fontSize: 14, color: colorName.black)),
+        hintText: widget.title,
+        hintStyle: const TextStyle(
+            fontSize: 14, color: colorName.black, fontFamily: 'Poppins'),
+      ),
     ).pSymmetric(h: 12).box.white.withRounded(value: 10).make();
   }
 }

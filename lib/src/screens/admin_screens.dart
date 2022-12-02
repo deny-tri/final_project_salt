@@ -30,7 +30,11 @@ class _AdminScreensState extends State<AdminScreens> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: 'Add Products'.text.color(colorName.accentRed).makeCentered(),
+          title: 'Add Products'
+              .text
+              .color(colorName.accentRed)
+              .fontFamily('Poppins')
+              .makeCentered(),
           backgroundColor: Colors.transparent,
           leading: IconButton(
             onPressed: () {

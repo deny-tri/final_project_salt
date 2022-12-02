@@ -24,6 +24,7 @@ class ProductWidgets extends StatelessWidget {
           .setPriceToIDR(products.price!)
           .text
           .color(colorName.black)
+          .fontFamily('Poppins')
           .bodyText1(context)
           .make(),
     ])
@@ -64,6 +65,7 @@ class ProductHome extends StatelessWidget {
           .text
           .color(colorName.black)
           .bodyText1(context)
+          .fontFamily('Poppins')
           .make(),
     ])
         .p12()

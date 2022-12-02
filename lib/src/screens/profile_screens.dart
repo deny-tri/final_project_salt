@@ -7,7 +7,11 @@ class ProfileScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: 'Profile'.text.color(colorName.accentRed).makeCentered(),
+        title: 'Profile'
+            .text
+            .color(colorName.accentRed)
+            .fontFamily('Poppins')
+            .makeCentered(),
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
@@ -36,6 +40,7 @@ class ProfileScreens extends StatelessWidget {
                   (state as CartCountIsSuccess).value != 0
                       ? VxBox(
                               child: state.value.text
+                                  .fontFamily('Poppins')
                                   .size(8)
                                   .white
                                   .makeCentered()
@@ -64,7 +69,7 @@ class ProfileScreens extends StatelessWidget {
                         .size(context.safePercentWidth * 100,
                             context.percentHeight * 15)
                         .margin(
-                          EdgeInsets.only(top: 80),
+                          const EdgeInsets.only(top: 80),
                         )
                         .make(),
                     VxBox()
@@ -73,7 +78,7 @@ class ProfileScreens extends StatelessWidget {
                         .white
                         .roundedFull
                         .margin(
-                          EdgeInsets.only(bottom: 45),
+                          const EdgeInsets.only(bottom: 55),
                         )
                         .make(),
                     BlocBuilder<UserBloc, UserState>(
@@ -110,10 +115,16 @@ class ProfileScreens extends StatelessWidget {
                               VStack(
                                 [
                                   state.data.username!.text
+                                      .fontFamily('Poppins')
+                                      .color(colorName.black)
                                       .size(16)
                                       .bold
                                       .make(),
-                                  state.data.email!.text.size(12).make(),
+                                  state.data.email!.text
+                                      .fontFamily('Poppins')
+                                      .color(colorName.black)
+                                      .size(12)
+                                      .make(),
                                 ],
                                 crossAlignment: CrossAxisAlignment.center,
                               ),
@@ -142,7 +153,7 @@ class ProfileScreens extends StatelessWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          title: 'Histori'.text.make(),
+                          title: 'Histori'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
                             backgroundImage: NetworkImage(
                                 "https://www.pngitem.com/pimgs/m/421-4214640_clip-art-clothes-icon-clothing-icon-hd-png.png"),
@@ -157,7 +168,7 @@ class ProfileScreens extends StatelessWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          title: 'Product'.text.make(),
+                          title: 'Product'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
                             backgroundImage: NetworkImage(
                                 "https://www.pngitem.com/pimgs/m/421-4214640_clip-art-clothes-icon-clothing-icon-hd-png.png"),
@@ -172,7 +183,7 @@ class ProfileScreens extends StatelessWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          title: 'My Cart'.text.make(),
+                          title: 'My Cart'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
                             backgroundImage: NetworkImage(
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSXmOP50sxAPhk-F9YpM1HgkB9g9-C9Z9VRQ&usqp=CAU"),
@@ -187,7 +198,7 @@ class ProfileScreens extends StatelessWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          title: 'Wish List'.text.make(),
+                          title: 'Wish List'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
                             backgroundImage: NetworkImage(
                                 "https://w7.pngwing.com/pngs/493/781/png-transparent-love-shape-public-interest-red-love.png"),
@@ -202,7 +213,8 @@ class ProfileScreens extends StatelessWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          title: 'Add Product'.text.make(),
+                          title:
+                              'Add Product'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
                             backgroundImage: NetworkImage(
                                 "https://cdn-icons-png.flaticon.com/512/3523/3523887.png"),
@@ -217,7 +229,7 @@ class ProfileScreens extends StatelessWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          title: 'Log Out'.text.make(),
+                          title: 'Log Out'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
                             backgroundImage: NetworkImage(
                                 "https://png.pngtree.com/png-clipart/20190520/original/pngtree-vector-logout-icon-png-image_4276345.jpg"),
@@ -228,76 +240,6 @@ class ProfileScreens extends StatelessWidget {
                     ),
                   ],
                 ),
-                // child: VStack(
-                //   [
-                //     HStack(
-                //       [
-                //         IconButton(
-                //           onPressed: () {
-                //             context.go(routeName.wishlistPath);
-                //           },
-                //           icon: const Icon(
-                //             Icons.favorite_border_rounded,
-                //             color: colorName.accentRed,
-                //           ),
-                //         ),
-                //         'Wish List'.text.make()
-                //       ],
-                //     ),
-                //     HStack(
-                //       [
-                //         IconButton(
-                //           onPressed: () {},
-                //           icon: const Icon(
-                //             Icons.logout_outlined,
-                //             color: colorName.accentGreen,
-                //           ),
-                //         ),
-                //         'Log Out'.text.make()
-                //       ],
-                //     ),
-                //     HStack(
-                //       [
-                //         IconButton(
-                //           onPressed: () {},
-                //           icon: const Icon(
-                //             Icons.logout_outlined,
-                //             color: colorName.accentGreen,
-                //           ),
-                //         ),
-                //         'Log Out'.text.make()
-                //       ],
-                //     ),
-                //     HStack(
-                //       [
-                //         IconButton(
-                //           onPressed: () {},
-                //           icon: const Icon(
-                //             Icons.logout_outlined,
-                //             color: colorName.accentGreen,
-                //           ),
-                //         ),
-                //         'Log Out'.text.make()
-                //       ],
-                //     ),
-                //     HStack(
-                //       [
-                //         IconButton(
-                //           onPressed: () {},
-                //           icon: const Icon(
-                //             Icons.logout_outlined,
-                //             color: colorName.accentGreen,
-                //           ),
-                //         ),
-                //         'Log Out'.text.make()
-                //       ],
-                //     ),
-                //     // ElevatedButton(
-                //     //   onPressed: () {},
-                //     //   child: "child".text.make(),
-                //     // )
-                //   ],
-                // ).p16(),
               )
                   .outerShadow
                   .white
@@ -305,7 +247,7 @@ class ProfileScreens extends StatelessWidget {
                   .size(
                       context.safePercentWidth * 90, context.percentHeight * 50)
                   .margin(
-                    EdgeInsets.only(top: 280),
+                    const EdgeInsets.only(top: 280),
                   )
                   .makeCentered(),
             ],
