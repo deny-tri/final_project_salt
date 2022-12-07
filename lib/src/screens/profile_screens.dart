@@ -5,13 +5,10 @@ class ProfileScreens extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
       appBar: AppBar(
-        title: 'Profile'
-            .text
-            .color(colorName.accentRed)
-            .fontFamily('Poppins')
-            .makeCentered(),
+        title: 'Profile'.text.color(colorName.accentRed).makeCentered(),
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
@@ -40,8 +37,8 @@ class ProfileScreens extends StatelessWidget {
                   (state as CartCountIsSuccess).value != 0
                       ? VxBox(
                               child: state.value.text
-                                  .fontFamily('Poppins')
                                   .size(8)
+                                  .fontFamily('Poppins')
                                   .white
                                   .makeCentered()
                                   .p4())
@@ -90,14 +87,16 @@ class ProfileScreens extends StatelessWidget {
                                 [
                                   VxCircle(
                                     radius: 120,
-                                    backgroundImage:
-                                        (state.data.photoProfile!.isNotEmpty)
-                                            ? DecorationImage(
-                                                image: NetworkImage(
-                                                    state.data.photoProfile!),
-                                                fit: BoxFit.cover,
-                                              )
-                                            : null,
+                                    backgroundImage: (user.photoURL!.isNotEmpty)
+                                        ? DecorationImage(
+                                            image: NetworkImage(user.photoURL!),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : const DecorationImage(
+                                            image: NetworkImage(
+                                                "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png"),
+                                            fit: BoxFit.cover,
+                                          ),
                                   ),
                                   IconButton(
                                     onPressed: () {},
@@ -115,14 +114,14 @@ class ProfileScreens extends StatelessWidget {
                               VStack(
                                 [
                                   state.data.username!.text
-                                      .fontFamily('Poppins')
                                       .color(colorName.black)
+                                      .fontFamily('Poppins')
                                       .size(16)
                                       .bold
                                       .make(),
                                   state.data.email!.text
-                                      .fontFamily('Poppins')
                                       .color(colorName.black)
+                                      .fontFamily('Poppins')
                                       .size(12)
                                       .make(),
                                 ],
@@ -156,7 +155,7 @@ class ProfileScreens extends StatelessWidget {
                           title: 'Histori'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
                             backgroundImage: NetworkImage(
-                                "https://www.pngitem.com/pimgs/m/421-4214640_clip-art-clothes-icon-clothing-icon-hd-png.png"),
+                                "https://cdn-icons-png.flaticon.com/512/272/272889.png"),
                           ),
                           trailing: const Icon(Icons.star),
                         ),
@@ -201,7 +200,7 @@ class ProfileScreens extends StatelessWidget {
                           title: 'Wish List'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
                             backgroundImage: NetworkImage(
-                                "https://w7.pngwing.com/pngs/493/781/png-transparent-love-shape-public-interest-red-love.png"),
+                                "https://p.kindpng.com/picc/s/82-828436_red-heart-icon2x-environmental-defence-canada-hd-png.png"),
                           ),
                           trailing: const Icon(Icons.star),
                         ),
@@ -225,7 +224,8 @@ class ProfileScreens extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        BlocProvider.of<UserBloc>(context).add(LogOutUser());
+                        showAlertDialog(context);
+                        //   BlocProvider.of<UserBloc>(context).add(LogOutUser());
                       },
                       child: Card(
                         child: ListTile(
@@ -254,6 +254,43 @@ class ProfileScreens extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: const Text(
+        "Tidak",
+        style: TextStyle(fontFamily: 'Poppins'),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text(
+        "Ya",
+        style: TextStyle(fontFamily: 'Poppins'),
+      ),
+      onPressed: () {
+        BlocProvider.of<UserBloc>(context).add(LogOutUser());
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: const Text(
+        "Log Out?",
+        style: TextStyle(fontFamily: 'Poppins'),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
