@@ -13,6 +13,6 @@ class LoginUser extends LoginEvent {
   });
 }
 
-class GoogleSignInRequested extends LoginEvent {}
+class GoogleLoginInRequested extends LoginEvent {}
 
 class SignOutRequested extends LoginEvent {}

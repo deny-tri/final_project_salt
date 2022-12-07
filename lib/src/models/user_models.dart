@@ -39,7 +39,7 @@ class UserModel {
       uid: map['uid'] != null ? map['uid'] as String : null,
       photoProfile: map['photoProfile'] != null
           ? map['photoProfile'] as String
-          : "https://www.freeiconspng.com/thumbs/person-icon/person-icon-person-icon-17.jpg",
+          : "https://perpustakaan.unej.ac.id/wp-content/uploads/2016/09/person-icon.png",
       walletId: map['walletId'] != null ? map['walletId'] as String : null,
       saldo: map['saldo'] != null ? map['saldo'] as String : null,
       admin: map['admin'] != null ? map['admin'] as bool : null,

@@ -23,5 +23,18 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         ),
       );
     });
+    on<GoogleSignInRequested>((event, emit) async {
+      emit(RegisterIsLoading());
+      final result = await UserServices().signInWithGoogle();
+      emit(
+        result.fold(
+          (l) => RegisterIsFailed(message: l),
+          (r) {
+            Commons().setUID(r.uid!);
+            return RegisterIsSuccess(data: r);
+          },
+        ),
+      );
+    });
   }
 }

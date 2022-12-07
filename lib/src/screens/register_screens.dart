@@ -27,7 +27,10 @@ class _RegisterScreensState extends State<RegisterScreens> {
             },
             child: VxBox(
               child: VStack(
-                [_buildHeaderText(), _buildRegisterForm()],
+                [
+                  _buildHeaderText(),
+                  _buildRegisterForm(),
+                ],
                 alignment: MainAxisAlignment.center,
                 axisSize: MainAxisSize.max,
               ).p16(),
@@ -122,7 +125,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
         'Or Connect With'.text.fontFamily('Poppins').makeCentered(),
         IconButton(
           onPressed: () {
-            // _authenticateWithGoogle(context);
+            BlocProvider.of<RegisterBloc>(context).add(GoogleSignInRequested());
           },
           icon: Image.network(
             "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png",

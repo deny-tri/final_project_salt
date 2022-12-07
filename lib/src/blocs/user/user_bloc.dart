@@ -38,5 +38,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         ),
       );
     });
+    on<AuthGoogle>((event, emit) async {
+      emit(UserIsLoading());
+      final result = await UserServices().signInWithGoogle();
+      emit(
+        result.fold(
+          (l) => UserIsFailed(message: l),
+          (r) {
+            Commons().setUID(r.uid!);
+            return UserIsSuccess(data: r);
+          },
+        ),
+      );
+    });
   }
 }

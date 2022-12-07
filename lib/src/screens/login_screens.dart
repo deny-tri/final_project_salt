@@ -106,7 +106,7 @@ class _LoginScreensState extends State<LoginScreens> {
         8.heightBox,
         IconButton(
           onPressed: () {
-            // _authenticateWithGoogle(context);
+            BlocProvider.of<LoginBloc>(context).add(GoogleLoginInRequested());
           },
           icon: Image.network(
             "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png",

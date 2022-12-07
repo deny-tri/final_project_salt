@@ -8,3 +8,5 @@ class LoadUserData extends UserEvent {}
 class LogOutUser extends UserEvent {}
 
 class ChangePhoto extends UserEvent {}
+
+class AuthGoogle extends UserEvent {}

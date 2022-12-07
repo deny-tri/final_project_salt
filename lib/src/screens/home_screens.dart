@@ -18,7 +18,8 @@ class HomeScreens extends StatelessWidget {
           builder: (context, state) {
             if (state is UserIsLoading) {
               return const CircularProgressIndicator();
-            } else if (state is UserIsSuccess) {
+            }
+            if (state is UserIsSuccess) {
               return VStack(
                 [
                   _buildAppbar(context, state.data),
@@ -130,18 +131,23 @@ class HomeScreens extends StatelessWidget {
   }
 
   Widget _buildAppbar(BuildContext context, UserModel data) {
+    final user = FirebaseAuth.instance.currentUser!;
     return VxBox(
       child: HStack(
         [
           HStack([
             VxCircle(
               radius: 56,
-              backgroundImage: (data.photoProfile!.isNotEmpty)
+              backgroundImage: (user.photoURL!.isNotEmpty)
                   ? DecorationImage(
-                      image: NetworkImage(data.photoProfile!),
+                      image: NetworkImage(user.photoURL!),
                       fit: BoxFit.cover,
                     )
-                  : null,
+                  : const DecorationImage(
+                      image: NetworkImage(
+                          "https://perpustakaan.unej.ac.id/wp-content/uploads/2016/09/person-icon.png"),
+                      fit: BoxFit.cover,
+                    ),
             ).onTap(() {
               context.go(routeName.profilePath);
             }),
@@ -155,6 +161,16 @@ class HomeScreens extends StatelessWidget {
               data.username!.textSpan.bold.size(18).make(),
             ]).make(),
           ]).expand(),
+          IconButton(
+            onPressed: () {
+              final cubit = context.read<DarkThemeCubit>();
+              cubit.darkTheme();
+            },
+            icon: const Icon(
+              Icons.dark_mode,
+              color: colorName.accentRed,
+            ),
+          ),
           BlocBuilder<CartCountCubit, CartCountState>(
             builder: (context, state) {
               return ZStack(
@@ -167,7 +183,7 @@ class HomeScreens extends StatelessWidget {
                     },
                     icon: const Icon(
                       Icons.shopping_cart_outlined,
-                      color: colorName.black,
+                      color: colorName.accentRed,
                     ),
                   ),
                   (state as CartCountIsSuccess).value != 0

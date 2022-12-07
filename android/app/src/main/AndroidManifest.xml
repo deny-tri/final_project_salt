@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.repticinfo.final_project_salt">
    <application
-        android:label="final_project_salt"
+        android:label="Mega Shop"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -16,3 +16,5 @@ class RegisterUser extends RegisterEvent {
     required this.password,
   });
 }
+
+class GoogleSignInRequested extends RegisterEvent {}
