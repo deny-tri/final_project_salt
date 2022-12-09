@@ -30,9 +30,7 @@ class _HomeScreensState extends State<HomeScreens> {
     controller = CountdownTimerController(endTime: endTime, onEnd: onEnd);
   }
 
-  void onEnd() {
-    print('onEnd');
-  }
+  void onEnd() {}
 
   @override
   void dispose() {
@@ -71,22 +69,24 @@ class _HomeScreensState extends State<HomeScreens> {
                     HStack([
                       'Promo'.text.bold.fontFamily('Poppins').make(),
                       20.widthBox,
-                      CountdownTimer(
-                        controller: controller,
-                        onEnd: onEnd,
-                        endTime: endTime,
-                        textStyle: const TextStyle(
-                            color: colorName.white,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.bold),
-                      )
-                          .box
-                          .outerShadow
-                          .color(colorName.accentRed)
-                          .rounded
-                          .size(135, 30)
-                          .p4
-                          .makeCentered(),
+                      Center(
+                        child: CountdownTimer(
+                          controller: controller,
+                          onEnd: onEnd,
+                          endTime: endTime,
+                          textStyle: const TextStyle(
+                              color: colorName.white,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold),
+                        )
+                            .box
+                            .outerShadow
+                            .color(colorName.accentRed)
+                            .rounded
+                            .size(135, 30)
+                            .p4
+                            .makeCentered(),
+                      ),
                     ]),
                     8.heightBox,
                     VxBox(
