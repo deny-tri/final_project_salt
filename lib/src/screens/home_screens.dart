@@ -83,7 +83,8 @@ class _HomeScreensState extends State<HomeScreens> {
                             .outerShadow
                             .color(colorName.accentRed)
                             .rounded
-                            .size(135, 30)
+                            .size(context.percentWidth * 34,
+                                context.percentHeight * 4)
                             .p4
                             .makeCentered(),
                       ),
