@@ -10,7 +10,8 @@ class HomeScreens extends StatefulWidget {
 class _HomeScreensState extends State<HomeScreens> {
   late bool _isLoading;
   late bool _isLoadingApp;
-
+  late CountdownTimerController controller;
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 1200000;
   @override
   void initState() {
     _isLoadingApp = true;
@@ -26,6 +27,17 @@ class _HomeScreensState extends State<HomeScreens> {
       });
     });
     super.initState();
+    controller = CountdownTimerController(endTime: endTime, onEnd: onEnd);
+  }
+
+  void onEnd() {
+    print('onEnd');
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -56,7 +68,26 @@ class _HomeScreensState extends State<HomeScreens> {
                     24.heightBox,
                     _buildMenuHome(context),
                     24.heightBox,
-                    'Promo'.text.bold.fontFamily('Poppins').make(),
+                    HStack([
+                      'Promo'.text.bold.fontFamily('Poppins').make(),
+                      20.widthBox,
+                      CountdownTimer(
+                        controller: controller,
+                        onEnd: onEnd,
+                        endTime: endTime,
+                        textStyle: const TextStyle(
+                            color: colorName.white,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold),
+                      )
+                          .box
+                          .outerShadow
+                          .color(colorName.accentRed)
+                          .rounded
+                          .size(135, 30)
+                          .p4
+                          .makeCentered(),
+                    ]),
                     8.heightBox,
                     VxBox(
                       child: _buildListProduct(),
@@ -123,7 +154,7 @@ class _HomeScreensState extends State<HomeScreens> {
                   "https://kicaunews.com/wp-content/uploads/2022/02/8E0068FF-8604-4E9B-A839-F2B71D8A4FEC.png",
                 ].map((index) {
                   return Image.network(
-                    "$index",
+                    index,
                     fit: BoxFit.cover,
                     height: 150.0,
                     width: 250,
@@ -139,7 +170,7 @@ class _HomeScreensState extends State<HomeScreens> {
               "https://kicaunews.com/wp-content/uploads/2022/02/8E0068FF-8604-4E9B-A839-F2B71D8A4FEC.png",
             ].map((index) {
               return Image.network(
-                "$index",
+                index,
                 fit: BoxFit.cover,
                 height: 150.0,
                 width: 250,

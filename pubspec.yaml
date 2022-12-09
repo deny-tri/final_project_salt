@@ -44,6 +44,7 @@ dependencies:
   email_validator: ^2.1.17
   flutter_facebook_auth: ^5.0.6
   shimmer: ^2.0.0
+  flutter_countdown_timer: ^4.1.0
   flutter:
     sdk: flutter
 

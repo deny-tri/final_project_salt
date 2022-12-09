@@ -89,7 +89,9 @@ class HistoriScreens extends StatelessWidget {
                                         : colorName.accentGreen))
                             .make()
                       ]),
-                      const VxDivider(type: VxDividerType.horizontal).py8(),
+                      const VxDivider(type: VxDividerType.horizontal)
+                          .backgroundColor(colorName.accentRed)
+                          .py8(),
                       VStack(listOrderState.model[index].products
                           .map((e) => HStack([
                                 VxBox()
