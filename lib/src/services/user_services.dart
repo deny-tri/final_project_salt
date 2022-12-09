@@ -111,12 +111,4 @@ class UserServices {
   Future<void> logOutUser() async {
     await FirebaseAuth.instance.signOut();
   }
-
-  Future<void> resetPassword({required String email}) async {
-    try {
-      return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    } catch (e) {
-      print(e); // showError(title: '...', error: e);
-    }
-  }
 }
