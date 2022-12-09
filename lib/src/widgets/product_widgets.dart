@@ -112,7 +112,7 @@ class _ProductHomeState extends State<ProductHome> {
   @override
   void initState() {
     _isShimmer = true;
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 5), () {
       setState(() {
         _isShimmer = false;
       });
