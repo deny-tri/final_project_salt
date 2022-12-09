@@ -5,7 +5,6 @@ class ProfileScreens extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
       appBar: AppBar(
         title: 'Profile'.text.color(colorName.accentRed).makeCentered(),
@@ -154,7 +153,7 @@ class ProfileScreens extends StatelessWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          title: 'Histori'.text.fontFamily('Poppins').make(),
+                          title: 'History'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
                             backgroundColor: colorName.accentRed,
                             child: Icon(
@@ -186,6 +185,25 @@ class ProfileScreens extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
+                        context.go(routeName.adminPath);
+                      },
+                      child: Card(
+                        child: ListTile(
+                          title:
+                              'Add Product'.text.fontFamily('Poppins').make(),
+                          leading: const CircleAvatar(
+                            backgroundColor: colorName.accentRed,
+                            child: Icon(
+                              Icons.shop,
+                              color: colorName.white,
+                            ),
+                          ),
+                          trailing: const Icon(Icons.arrow_forward_ios),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
                         context.go(routeName.cartPath);
                       },
                       child: Card(
@@ -198,7 +216,35 @@ class ProfileScreens extends StatelessWidget {
                               color: colorName.white,
                             ),
                           ),
-                          trailing: const Icon(Icons.arrow_forward_ios),
+                          trailing: HStack([
+                            BlocBuilder<CartCountCubit, CartCountState>(
+                              builder: (context, state) {
+                                return (state as CartCountIsSuccess).value != 0
+                                    ? '${state.value}'
+                                        .richText
+                                        .fontFamily('Poppins')
+                                        .color(colorName.white)
+                                        .withTextSpanChildren([
+                                          ' Items'
+                                              .textSpan
+                                              .fontFamily('Poppins')
+                                              .color(colorName.white)
+                                              .make(),
+                                        ])
+                                        .make()
+                                        .box
+                                        .rounded
+                                        .p4
+                                        .color(colorName.accentRed)
+                                        .make()
+                                    : '0 Items'
+                                        .text
+                                        .fontFamily('Poppins')
+                                        .make();
+                              },
+                            ),
+                            const Icon(Icons.arrow_forward_ios)
+                          ]),
                         ),
                       ),
                     ),
@@ -208,7 +254,7 @@ class ProfileScreens extends StatelessWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          title: 'Wish List'.text.fontFamily('Poppins').make(),
+                          title: 'Favorite'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
                             backgroundColor: colorName.accentRed,
                             child: Icon(
@@ -216,7 +262,40 @@ class ProfileScreens extends StatelessWidget {
                               color: colorName.white,
                             ),
                           ),
-                          trailing: const Icon(Icons.arrow_forward_ios),
+                          trailing: HStack([
+                            BlocBuilder<WishlistCountCubit, WishlistCountState>(
+                              builder: (context, state) {
+                                return (state as WishlistCountIsSuccess)
+                                            .value !=
+                                        0
+                                    ? '${state.value}'
+                                        .richText
+                                        .color(colorName.white)
+                                        .fontFamily('Poppins')
+                                        .withTextSpanChildren([
+                                          ' Items'
+                                              .textSpan
+                                              .color(colorName.white)
+                                              .fontFamily('Poppins')
+                                              .make(),
+                                        ])
+                                        .make()
+                                        .box
+                                        .rounded
+                                        .p4
+                                        .color(colorName.accentRed)
+                                        .make()
+                                    : '0 Items'
+                                        .text
+                                        .fontFamily('Poppins')
+                                        .make()
+                                        .box
+                                        .roundedFull
+                                        .make();
+                              },
+                            ),
+                            const Icon(Icons.arrow_forward_ios)
+                          ]),
                         ),
                       ),
                     ),
@@ -241,7 +320,7 @@ class ProfileScreens extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        showAlertDialog(context);
+                        Commons().showAlertDialog(context);
                         //   BlocProvider.of<UserBloc>(context).add(LogOutUser());
                       },
                       child: Card(
@@ -274,43 +353,6 @@ class ProfileScreens extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  showAlertDialog(BuildContext context) {
-    Widget cancelButton = TextButton(
-      child: const Text(
-        "Tidak",
-        style: TextStyle(fontFamily: 'Poppins'),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    Widget continueButton = TextButton(
-      child: const Text(
-        "Ya",
-        style: TextStyle(fontFamily: 'Poppins'),
-      ),
-      onPressed: () {
-        BlocProvider.of<UserBloc>(context).add(LogOutUser());
-      },
-    );
-    AlertDialog alert = AlertDialog(
-      title: const Text(
-        "Log Out?",
-        style: TextStyle(fontFamily: 'Poppins'),
-      ),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
     );
   }
 }

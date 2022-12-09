@@ -5,6 +5,7 @@ part of 'utilities.dart';
 class Commons {
   final prefs = SharedPreferences.getInstance();
   final picker = ImagePicker();
+  bool isLoading = false;
 
   void setUID(String uid) async {
     final storage = await prefs;
@@ -64,5 +65,42 @@ class Commons {
       return 'Afternoon';
     }
     return 'Evening';
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: const Text(
+        "No",
+        style: TextStyle(fontFamily: 'Poppins'),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text(
+        "Yes",
+        style: TextStyle(fontFamily: 'Poppins'),
+      ),
+      onPressed: () {
+        BlocProvider.of<UserBloc>(context).add(LogOutUser());
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: const Text(
+        "Log Out?",
+        style: TextStyle(fontFamily: 'Poppins'),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

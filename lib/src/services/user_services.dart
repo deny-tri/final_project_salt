@@ -44,7 +44,7 @@ class UserServices {
       if (userData.data()!.isNotEmpty) {
         return right(UserModel.fromMap(userData.data()!));
       } else {
-        return left('User Belum Terdaftar');
+        return left('the user has not been registered');
       }
     } on FirebaseAuthException catch (e) {
       return left(e.toString().split("]").last);
@@ -88,7 +88,7 @@ class UserServices {
         usersCollection.doc(result.user!.uid).set(userData.toMap());
         return right(userData);
       }
-      return left('Sign In Gagal');
+      return left('Login Failed');
     } on FirebaseAuthException catch (e) {
       return left(e.toString().split(']').last);
     }
@@ -110,5 +110,13 @@ class UserServices {
 
   Future<void> logOutUser() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  Future<void> resetPassword({required String email}) async {
+    try {
+      return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print(e); // showError(title: '...', error: e);
+    }
   }
 }

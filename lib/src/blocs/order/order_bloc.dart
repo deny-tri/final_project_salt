@@ -16,7 +16,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           dateTime: DateTime.now(),
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           paymentStatus: 0,
-          productName: 'Belanja',
+          productName: 'Shopping',
           totalPrice: event.totalPrice,
           products: event.products);
       final result = await OrderServices().orderProcess(orderModel);

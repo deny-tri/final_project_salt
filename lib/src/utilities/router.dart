@@ -4,6 +4,7 @@ mixin routeName {
   static const login = '/login';
   static const splash = '/splash';
   static const register = '/register';
+  static const resetpass = '/resetpass';
   static const home = '/home';
   static const admin = 'admin';
   static const adminPath = '/home/admin';
@@ -51,11 +52,18 @@ final GoRouter router = GoRouter(initialLocation: routeName.splash, routes: [
     },
   ),
   GoRoute(
+    path: routeName.resetpass,
+    builder: (context, state) {
+      return const ResetPassword();
+    },
+  ),
+  GoRoute(
       path: routeName.home,
       builder: (context, state) {
         BlocProvider.of<UserBloc>(context).add(LoadUserData());
-        BlocProvider.of<CartCountCubit>(context).getCartCount();
         BlocProvider.of<ListProductBloc>(context).add(FetchListProduct());
+        BlocProvider.of<CartCountCubit>(context).getCartCount();
+        BlocProvider.of<WishlistCountCubit>(context).getWishlistCount();
         return const HomeScreens();
       },
       routes: [

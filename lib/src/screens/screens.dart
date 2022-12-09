@@ -5,10 +5,10 @@ import 'package:final_project_salt/src/cubits/cubits.dart';
 import 'package:final_project_salt/src/models/models.dart';
 import 'package:final_project_salt/src/utilities/utilities.dart';
 import 'package:final_project_salt/src/widgets/widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'dart:async';
 
@@ -23,3 +23,4 @@ part 'profile_screens.dart';
 part 'product_screens.dart';
 part 'cart_screens.dart';
 part 'histori_screens.dart';
+part 'reset_pass.dart';

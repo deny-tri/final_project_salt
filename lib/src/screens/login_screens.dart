@@ -24,8 +24,6 @@ class _LoginScreensState extends State<LoginScreens> {
                   .showSnackBar(SnackBar(content: state.message.text.make()));
             } else if (state is LoginIsSuccess) {
               context.go(routeName.home);
-            } else if (state is Authenticated) {
-              context.go(routeName.home);
             }
           },
           child: VxBox(
@@ -33,10 +31,10 @@ class _LoginScreensState extends State<LoginScreens> {
               [
                 Center(
                   child: Image.asset(
-                    "assets/images/logo.jpeg",
+                    "assets/images/logomegashop.png",
                     fit: BoxFit.cover,
-                    width: 100,
-                    height: 100,
+                    width: 200,
+                    height: 200,
                   ),
                 ),
                 16.heightBox,
@@ -45,7 +43,10 @@ class _LoginScreensState extends State<LoginScreens> {
               alignment: MainAxisAlignment.center,
               axisSize: MainAxisSize.max,
             ).p16(),
-          ).gradientFromTo(from: Vx.red400, to: Vx.blue400).make(),
+          )
+              .gradientFromTo(
+                  from: colorName.accentRed, to: colorName.accentYellow)
+              .make(),
         ),
       ),
     );
@@ -66,11 +67,6 @@ class _LoginScreensState extends State<LoginScreens> {
           isPassword: true,
         ),
         8.heightBox,
-        'Forget Password?'
-            .text
-            .color(colorName.accentBlue)
-            .fontFamily('Poppins')
-            .make(),
         16.heightBox,
         BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
@@ -89,7 +85,11 @@ class _LoginScreensState extends State<LoginScreens> {
         ),
         HStack(
           [
-            'Create new account?'.text.fontFamily('Poppins').makeCentered(),
+            'Create new account?'
+                .text
+                .color(colorName.black)
+                .fontFamily('Poppins')
+                .makeCentered(),
             8.widthBox,
             'Register'
                 .text
@@ -104,7 +104,12 @@ class _LoginScreensState extends State<LoginScreens> {
           axisSize: MainAxisSize.max,
         ),
         8.heightBox,
-        'Or Continue With'.text.bold.fontFamily('Poppins').makeCentered(),
+        'Or Continue With'
+            .text
+            .bold
+            .color(colorName.black)
+            .fontFamily('Poppins')
+            .makeCentered(),
         8.heightBox,
         IconButton(
           onPressed: () {
