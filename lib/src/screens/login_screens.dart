@@ -24,6 +24,8 @@ class _LoginScreensState extends State<LoginScreens> {
                   .showSnackBar(SnackBar(content: state.message.text.make()));
             } else if (state is LoginIsSuccess) {
               context.go(routeName.home);
+            } else if (state is Authenticated) {
+              context.go(routeName.home);
             }
           },
           child: VxBox(

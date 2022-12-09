@@ -87,16 +87,18 @@ class ProfileScreens extends StatelessWidget {
                                 [
                                   VxCircle(
                                     radius: 120,
-                                    backgroundImage: (user.photoURL!.isNotEmpty)
-                                        ? DecorationImage(
-                                            image: NetworkImage(user.photoURL!),
-                                            fit: BoxFit.cover,
-                                          )
-                                        : const DecorationImage(
-                                            image: NetworkImage(
-                                                "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png"),
-                                            fit: BoxFit.cover,
-                                          ),
+                                    backgroundImage:
+                                        (state.data.photoProfile!.isNotEmpty)
+                                            ? DecorationImage(
+                                                image: NetworkImage(
+                                                    state.data.photoProfile!),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : const DecorationImage(
+                                                image: NetworkImage(
+                                                    "https://perpustakaan.unej.ac.id/wp-content/uploads/2016/09/person-icon.png"),
+                                                fit: BoxFit.cover,
+                                              ),
                                   ),
                                   IconButton(
                                     onPressed: () {},
@@ -154,10 +156,13 @@ class ProfileScreens extends StatelessWidget {
                         child: ListTile(
                           title: 'Histori'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://cdn-icons-png.flaticon.com/512/272/272889.png"),
+                            backgroundColor: colorName.accentRed,
+                            child: Icon(
+                              Icons.wallet,
+                              color: colorName.white,
+                            ),
                           ),
-                          trailing: const Icon(Icons.star),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                         ),
                       ),
                     ),
@@ -169,10 +174,13 @@ class ProfileScreens extends StatelessWidget {
                         child: ListTile(
                           title: 'Product'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://www.pngitem.com/pimgs/m/421-4214640_clip-art-clothes-icon-clothing-icon-hd-png.png"),
+                            backgroundColor: colorName.accentRed,
+                            child: Icon(
+                              Icons.shopping_bag,
+                              color: colorName.white,
+                            ),
                           ),
-                          trailing: const Icon(Icons.star),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                         ),
                       ),
                     ),
@@ -184,10 +192,13 @@ class ProfileScreens extends StatelessWidget {
                         child: ListTile(
                           title: 'My Cart'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSXmOP50sxAPhk-F9YpM1HgkB9g9-C9Z9VRQ&usqp=CAU"),
+                            backgroundColor: colorName.accentRed,
+                            child: Icon(
+                              Icons.shopping_cart,
+                              color: colorName.white,
+                            ),
                           ),
-                          trailing: const Icon(Icons.star),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                         ),
                       ),
                     ),
@@ -199,26 +210,32 @@ class ProfileScreens extends StatelessWidget {
                         child: ListTile(
                           title: 'Wish List'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://p.kindpng.com/picc/s/82-828436_red-heart-icon2x-environmental-defence-canada-hd-png.png"),
+                            backgroundColor: colorName.accentRed,
+                            child: Icon(
+                              Icons.favorite,
+                              color: colorName.white,
+                            ),
                           ),
-                          trailing: const Icon(Icons.star),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                         ),
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
-                        context.go(routeName.adminPath);
+                        final cubit = context.read<DarkThemeCubit>();
+                        cubit.darkTheme();
                       },
                       child: Card(
                         child: ListTile(
-                          title:
-                              'Add Product'.text.fontFamily('Poppins').make(),
+                          title: 'Dark Mode'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://cdn-icons-png.flaticon.com/512/3523/3523887.png"),
+                            backgroundColor: colorName.accentRed,
+                            child: Icon(
+                              Icons.dark_mode,
+                              color: colorName.white,
+                            ),
                           ),
-                          trailing: const Icon(Icons.star),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                         ),
                       ),
                     ),
@@ -231,10 +248,13 @@ class ProfileScreens extends StatelessWidget {
                         child: ListTile(
                           title: 'Log Out'.text.fontFamily('Poppins').make(),
                           leading: const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://png.pngtree.com/png-clipart/20190520/original/pngtree-vector-logout-icon-png-image_4276345.jpg"),
+                            backgroundColor: colorName.accentRed,
+                            child: Icon(
+                              Icons.logout,
+                              color: colorName.white,
+                            ),
                           ),
-                          trailing: const Icon(Icons.star),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                         ),
                       ),
                     ),

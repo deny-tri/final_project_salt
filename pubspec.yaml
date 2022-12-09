@@ -98,6 +98,8 @@ flutter:
         - asset: assets/fonts/Poppins-BlackItalic.ttf
         - asset: assets/fonts/Poppins-Bold.ttf
         - asset: assets/fonts/Poppins-BoldItalic.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+        - asset: assets/fonts/Poppins-MediumItalic.ttf
           style: italic
   #   - family: Trajan Pro
   #     fonts:

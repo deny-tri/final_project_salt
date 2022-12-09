@@ -138,9 +138,9 @@ class HomeScreens extends StatelessWidget {
           HStack([
             VxCircle(
               radius: 56,
-              backgroundImage: (user.photoURL!.isNotEmpty)
+              backgroundImage: (data.photoProfile!.isNotEmpty)
                   ? DecorationImage(
-                      image: NetworkImage(user.photoURL!),
+                      image: NetworkImage(data.photoProfile!),
                       fit: BoxFit.cover,
                     )
                   : const DecorationImage(
