@@ -123,7 +123,7 @@ class _HomeScreensState extends State<HomeScreens> {
                   "https://kicaunews.com/wp-content/uploads/2022/02/8E0068FF-8604-4E9B-A839-F2B71D8A4FEC.png",
                 ].map((index) {
                   return Image.network(
-                    "$index",
+                    index,
                     fit: BoxFit.cover,
                     height: 150.0,
                     width: 250,
@@ -139,7 +139,7 @@ class _HomeScreensState extends State<HomeScreens> {
               "https://kicaunews.com/wp-content/uploads/2022/02/8E0068FF-8604-4E9B-A839-F2B71D8A4FEC.png",
             ].map((index) {
               return Image.network(
-                "$index",
+                index,
                 fit: BoxFit.cover,
                 height: 150.0,
                 width: 250,
