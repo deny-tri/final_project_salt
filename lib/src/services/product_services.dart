@@ -57,7 +57,7 @@ class ProductService {
           .doc(doc.id)
           .update(model.copyWith(id: doc.id).toMap());
 
-      return right('Berhasil Memasukkan Ke Keranjang');
+      return right('Successfully Added to Cart');
     } catch (e) {
       return left(e.toString());
     }
@@ -76,7 +76,7 @@ class ProductService {
             .delete();
       }
 
-      return right('Berhasil Memasukkan Ke Keranjang');
+      return right('Successfully Added to Cart');
     } catch (e) {
       return left(e.toString());
     }
@@ -95,6 +95,24 @@ class ProductService {
         (a, b) => a.name!.compareTo(b.name!),
       );
       return right(data);
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  Future<Either<String, int>> getWishlistItemCount() async {
+    try {
+      String? uid = await Commons().getUID();
+      final querySnapshot = await usersCollection
+          .doc(uid)
+          .collection(wishListCollectionName)
+          .get();
+      final data = querySnapshot.docs
+          .map((e) => ProductModel.fromMap(e.data()))
+          .toList();
+      final dataFiltered = <dynamic>{};
+      data.retainWhere((x) => dataFiltered.add(x.type[0]));
+      return right(dataFiltered.length);
     } catch (e) {
       return left(e.toString());
     }
@@ -126,7 +144,7 @@ class ProductService {
           .doc(model.id)
           .delete();
 
-      return right('Berhasil Dihapus');
+      return right('Deleted Successfully');
     } catch (e) {
       return left(e.toString());
     }
@@ -141,7 +159,7 @@ class ProductService {
           .doc(model.id)
           .set(model.toMap());
 
-      return right('Berhasil Menyimpan');
+      return right('Saved Successfully');
     } catch (e) {
       return left(e.toString());
     }
@@ -156,7 +174,7 @@ class ProductService {
           .doc(id)
           .delete();
 
-      return right('Berhasil Menghapus dari wishlist');
+      return right('Successfully Removed from Favorites List');
     } catch (e) {
       return left(e.toString());
     }

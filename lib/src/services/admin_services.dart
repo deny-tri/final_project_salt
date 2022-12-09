@@ -19,7 +19,7 @@ class AdminService {
           );
         }
       }
-      return right('Berhasil Menambahkan Produk');
+      return right('Product Added Successfully');
     } catch (e) {
       return left(e.toString());
     }
@@ -29,7 +29,7 @@ class AdminService {
       String id, ProductModel data) async {
     try {
       productCollection.doc(data.id).update(data.toMap());
-      return right('Berhasil Menambahkan Produk');
+      return right('Product Added Successfully');
     } catch (e) {
       return left(e.toString());
     }

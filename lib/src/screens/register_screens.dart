@@ -35,7 +35,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                 axisSize: MainAxisSize.max,
               ).p16(),
             )
-                .gradientFromTo(from: Vx.red400, to: Vx.blue400)
+                .gradientFromTo(
+                    from: colorName.accentRed, to: colorName.accentYellow)
                 .size(context.safePercentWidth * 100,
                     context.safePercentHeight * 100)
                 .make(),
@@ -69,7 +70,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                 .make(),
             'Already Have Account'
                 .text
-                .color(Vx.red900)
+                .bold
+                .color(colorName.accentBlue)
                 .fontFamily('Poppins')
                 .make()
                 .onTap(() {

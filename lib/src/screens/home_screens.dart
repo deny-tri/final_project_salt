@@ -1,64 +1,150 @@
 part of 'screens.dart';
 
-class HomeScreens extends StatelessWidget {
+class HomeScreens extends StatefulWidget {
   const HomeScreens({super.key});
 
   @override
+  State<HomeScreens> createState() => _HomeScreensState();
+}
+
+class _HomeScreensState extends State<HomeScreens> {
+  late bool _isLoading;
+  late bool _isLoadingApp;
+
+  @override
+  void initState() {
+    _isLoadingApp = true;
+    _isLoading = true;
+    Future.delayed(const Duration(seconds: 5), () {
+      setState(() {
+        _isLoadingApp = false;
+      });
+    });
+    Future.delayed(const Duration(seconds: 8), () {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: BlocConsumer<UserBloc, UserState>(
-          listener: (context, state) {
-            if (state is UserIsFailed) {
-              Commons().showSnackBar(context, state.message);
-            } else if (state is UserIsLogOut) {
-              context.go(routeName.login);
-            }
-          },
-          builder: (context, state) {
-            if (state is UserIsLoading) {
-              return const CircularProgressIndicator();
-            }
-            if (state is UserIsSuccess) {
-              return VStack(
-                [
-                  _buildAppbar(context, state.data),
-                  24.heightBox,
-                  _buildBannerHome(context),
-                  24.heightBox,
-                  _buildMenuHome(context),
-                  24.heightBox,
-                  'Promo'.text.bold.fontFamily('Poppins').make(),
-                  8.heightBox,
-                  VxBox(
-                    child: _buildListProduct(),
-                  )
-                      .size(context.percentWidth * 100,
-                          context.percentHeight * 20)
-                      .make(),
-                  8.heightBox,
-                ],
-                alignment: MainAxisAlignment.start,
-                axisSize: MainAxisSize.max,
-              );
-            }
-            return 0.heightBox;
-          },
-        ).p16().centered().box.make(),
+    return RefreshIndicator(
+      onRefresh: () async {
+        BlocProvider.of<ListProductBloc>(context).add(FetchListProduct());
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: BlocConsumer<UserBloc, UserState>(
+            listener: (context, state) {
+              if (state is UserIsFailed) {
+                Commons().showSnackBar(context, state.message);
+              } else if (state is UserIsLogOut) {
+                context.go(routeName.login);
+              }
+            },
+            builder: (context, state) {
+              if (state is UserIsLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is UserIsSuccess) {
+                return VStack(
+                  [
+                    _buildAppbar(context, state.data),
+                    24.heightBox,
+                    _buildBannerHome(context),
+                    24.heightBox,
+                    _buildMenuHome(context),
+                    24.heightBox,
+                    'Promo'.text.bold.fontFamily('Poppins').make(),
+                    8.heightBox,
+                    VxBox(
+                      child: _buildListProduct(),
+                    )
+                        .size(context.percentWidth * 100,
+                            context.percentHeight * 20)
+                        .make(),
+                    8.heightBox,
+                    HStack(
+                      [
+                        'Recommend'.text.bold.fontFamily('Poppins').make(),
+                        GestureDetector(
+                          onTap: () {
+                            context.go(routeName.productPath);
+                          },
+                          child: HStack([
+                            'View All'
+                                .text
+                                .color(colorName.accentRed)
+                                .fontFamily('Poppins')
+                                .make(),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              color: colorName.accentRed,
+                              size: 14,
+                            )
+                          ]),
+                        )
+                      ],
+                      alignment: MainAxisAlignment.spaceBetween,
+                      axisSize: MainAxisSize.max,
+                    ),
+                    8.heightBox,
+                    VxBox(
+                      child: _buildRekomend(),
+                    )
+                        .size(context.percentWidth * 100,
+                            context.percentHeight * 50)
+                        .make(),
+                  ],
+                  alignment: MainAxisAlignment.start,
+                  axisSize: MainAxisSize.max,
+                ).scrollVertical();
+              }
+              return 0.heightBox;
+            },
+          ).p16().centered().box.make(),
+        ),
       ),
     );
   }
 
   Widget _buildBannerHome(BuildContext context) {
-    return VxBox(
-      child: Image.network(
-        "https://assets.digination.id/crop/0x0:0x0/x/photo/2021/03/19/3776868825.png",
-        fit: BoxFit.cover,
-      ),
-    )
-        .size(context.safePercentWidth * 100, context.safePercentHeight * 20)
-        .rounded
-        .make();
+    return _isLoading
+        ? Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade500.withOpacity(0.5),
+            child: VxSwiper(
+                autoPlay: true,
+                items: [
+                  "https://assets.digination.id/crop/0x0:0x0/x/photo/2021/03/19/3776868825.png",
+                  "https://www.qiscus.com/id/wp-content/uploads/sites/2/2022/04/Cara-menghitung-diskon.png",
+                  "https://assets.jalantikus.com/assets/cache/0/400/tips/2019/03/15/perbedeaan-cashback-dengan-diskon-41f30.jpg.webp",
+                  "https://kicaunews.com/wp-content/uploads/2022/02/8E0068FF-8604-4E9B-A839-F2B71D8A4FEC.png",
+                ].map((index) {
+                  return Image.network(
+                    "$index",
+                    fit: BoxFit.cover,
+                    height: 150.0,
+                    width: 250,
+                  ).box.rounded.outerShadow.white.alignCenter.make().p4();
+                }).toList()),
+          )
+        : VxSwiper(
+            autoPlay: true,
+            items: [
+              "https://assets.digination.id/crop/0x0:0x0/x/photo/2021/03/19/3776868825.png",
+              "https://www.qiscus.com/id/wp-content/uploads/sites/2/2022/04/Cara-menghitung-diskon.png",
+              "https://assets.jalantikus.com/assets/cache/0/400/tips/2019/03/15/perbedeaan-cashback-dengan-diskon-41f30.jpg.webp",
+              "https://kicaunews.com/wp-content/uploads/2022/02/8E0068FF-8604-4E9B-A839-F2B71D8A4FEC.png",
+            ].map((index) {
+              return Image.network(
+                "$index",
+                fit: BoxFit.cover,
+                height: 150.0,
+                width: 250,
+              ).box.rounded.outerShadow.white.alignCenter.make().p4();
+            }).toList());
   }
 
   Widget _buildMenuHome(BuildContext context) {
@@ -102,15 +188,14 @@ class HomeScreens extends StatelessWidget {
           [
             IconButton(
               onPressed: () {
-                final cubit = context.read<DarkThemeCubit>();
-                cubit.darkTheme();
+                context.go(routeName.historiPath);
               },
               icon: const Icon(
-                Icons.dark_mode,
+                Icons.wallet,
                 color: colorName.accentRed,
               ),
             ),
-            'Dark Theme'
+            'History'
                 .text
                 .bold
                 .color(colorName.black)
@@ -131,35 +216,63 @@ class HomeScreens extends StatelessWidget {
   }
 
   Widget _buildAppbar(BuildContext context, UserModel data) {
-    final user = FirebaseAuth.instance.currentUser!;
     return VxBox(
       child: HStack(
         [
           HStack([
-            VxCircle(
-              radius: 56,
-              backgroundImage: (user.photoURL!.isNotEmpty)
-                  ? DecorationImage(
-                      image: NetworkImage(user.photoURL!),
-                      fit: BoxFit.cover,
-                    )
-                  : const DecorationImage(
-                      image: NetworkImage(
-                          "https://perpustakaan.unej.ac.id/wp-content/uploads/2016/09/person-icon.png"),
-                      fit: BoxFit.cover,
-                    ),
-            ).onTap(() {
-              context.go(routeName.profilePath);
-            }),
+            _isLoadingApp
+                ? Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade500.withOpacity(0.5),
+                    child: VxCircle(
+                      radius: 56,
+                      backgroundImage: (data.photoProfile!.isNotEmpty)
+                          ? DecorationImage(
+                              image: NetworkImage(data.photoProfile!),
+                              fit: BoxFit.cover,
+                            )
+                          : const DecorationImage(
+                              image: NetworkImage(
+                                  "https://perpustakaan.unej.ac.id/wp-content/uploads/2016/09/person-icon.png"),
+                              fit: BoxFit.cover,
+                            ),
+                    ).onTap(() {
+                      context.go(routeName.profilePath);
+                    }),
+                  )
+                : VxCircle(
+                    radius: 56,
+                    backgroundImage: (data.photoProfile!.isNotEmpty)
+                        ? DecorationImage(
+                            image: NetworkImage(data.photoProfile!),
+                            fit: BoxFit.cover,
+                          )
+                        : const DecorationImage(
+                            image: NetworkImage(
+                                "https://perpustakaan.unej.ac.id/wp-content/uploads/2016/09/person-icon.png"),
+                            fit: BoxFit.cover,
+                          ),
+                  ).onTap(() {
+                    context.go(routeName.profilePath);
+                  }),
             16.widthBox,
-            'Good ${Commons().greeting()},\n'
-                .richText
-                .color(colorName.black)
-                .size(12)
-                .fontFamily('Poppins')
-                .withTextSpanChildren([
-              data.username!.textSpan.bold.size(18).make(),
-            ]).make(),
+            _isLoadingApp
+                ? Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade500.withOpacity(0.5),
+                    child: VStack([
+                      VxBox().outerShadow.white.size(100, 10).make(),
+                      16.heightBox,
+                      VxBox().outerShadow.white.size(150, 20).make(),
+                    ]))
+                : 'Good ${Commons().greeting()},\n'
+                    .richText
+                    .color(colorName.black)
+                    .size(12)
+                    .fontFamily('Poppins')
+                    .withTextSpanChildren([
+                    data.username!.textSpan.bold.size(18).make(),
+                  ]).make(),
           ]).expand(),
           IconButton(
             onPressed: () {
@@ -205,7 +318,7 @@ class HomeScreens extends StatelessWidget {
           )
         ],
       ),
-    ).gray100.make();
+    ).gray100.p4.make();
   }
 
   Widget _buildListProduct() {
@@ -224,7 +337,7 @@ class HomeScreens extends StatelessWidget {
               mainAxisSpacing: 16,
             ),
             itemBuilder: (context, index) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             },
           );
         }
@@ -245,7 +358,43 @@ class HomeScreens extends StatelessWidget {
           );
         }
 
-        return Container();
+        return 0.heightBox;
+      },
+    );
+  }
+
+  Widget _buildRekomend() {
+    return BlocConsumer<ListProductBloc, ListProductState>(
+      listener: (context, state) {
+        if (state is ListProductIsFailed) {
+          Commons().showSnackBar(context, state.message);
+        }
+      },
+      builder: (context, state) {
+        if (state is ListProductIsLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is ListProductIsSuccess) {
+          final data = state.products;
+
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+            ),
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              return ProductWidgets(
+                products: data[index],
+              );
+            },
+          );
+        }
+
+        return 0.heightBox;
       },
     );
   }

@@ -5,104 +5,111 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: 'Detail Product'
-            .text
-            .color(colorName.accentRed)
-            .fontFamily('Poppins')
-            .makeCentered(),
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            context.go(routeName.home);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: colorName.accentRed,
-          ),
-        ),
-        elevation: 0,
-        actions: [
-          BlocBuilder<CartCountCubit, CartCountState>(
-            builder: (context, state) {
-              return ZStack(
-                [
-                  IconButton(
-                    onPressed: () {
-                      context.go(routeName.cartPath);
-                    },
-                    icon: const Icon(
-                      Icons.shopping_cart_outlined,
-                      color: colorName.accentRed,
-                    ),
-                  ),
-                  (state as CartCountIsSuccess).value != 0
-                      ? VxBox(
-                              child: state.value.text
-                                  .fontFamily('Poppins')
-                                  .size(8)
-                                  .white
-                                  .makeCentered()
-                                  .p4())
-                          .roundedFull
-                          .color(colorName.accentRed)
-                          .make()
-                          .positioned(right: 8, top: 2)
-                      : 0.heightBox
-                ],
-                alignment: Alignment.topRight,
-              );
+    return RefreshIndicator(
+      onRefresh: () async {
+        BlocProvider.of<ListProductBloc>(context).add(FetchListProduct());
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: 'Detail Product'
+              .text
+              .color(colorName.accentRed)
+              .fontFamily('Poppins')
+              .makeCentered(),
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+            onPressed: () {
+              context.go(routeName.home);
             },
-          )
-        ],
-      ),
-      bottomNavigationBar: BlocBuilder<DetailProductsBloc, DetailProductsState>(
-        builder: (context, state) {
-          if (state is DetailProductsIsSuccess) {
-            return BlocConsumer<AddToCartBloc, AddToCartState>(
-              listener: (context, addToCartState) {
-                if (addToCartState is AddToCartIsSuccess) {
-                  Commons().showSnackBar(context, addToCartState.message);
-                }
-                if (addToCartState is AddToCartIsFailed) {
-                  Commons().showSnackBar(context, addToCartState.message);
-                }
-              },
-              builder: (context, addToCartState) {
-                return BlocBuilder<CheckCategoryCubit, CheckCategoryState>(
-                  builder: (context, categoryState) {
-                    return ButtonWidget(
-                      text: 'Add To Cart',
-                      isLoading: (addToCartState is AddToCartIsLoading),
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: colorName.accentRed,
+            ),
+          ),
+          elevation: 0,
+          actions: [
+            BlocBuilder<CartCountCubit, CartCountState>(
+              builder: (context, state) {
+                return ZStack(
+                  [
+                    IconButton(
                       onPressed: () {
-                        BlocProvider.of<AddToCartBloc>(context).add(AddToCart(
-                            state.model,
-                            (categoryState as CheckCategoryIsSelected)
-                                .selectedCategory));
+                        context.go(routeName.cartPath);
                       },
-                    ).p16().box.white.withShadow([
-                      BoxShadow(
-                          blurRadius: 10, color: colorName.grey.withOpacity(.1))
-                    ]).make();
-                  },
+                      icon: const Icon(
+                        Icons.shopping_cart_outlined,
+                        color: colorName.accentRed,
+                      ),
+                    ),
+                    (state as CartCountIsSuccess).value != 0
+                        ? VxBox(
+                                child: state.value.text
+                                    .fontFamily('Poppins')
+                                    .size(8)
+                                    .white
+                                    .makeCentered()
+                                    .p4())
+                            .roundedFull
+                            .color(colorName.accentRed)
+                            .make()
+                            .positioned(right: 8, top: 2)
+                        : 0.heightBox
+                  ],
+                  alignment: Alignment.topRight,
                 );
               },
-            );
-          }
-          return 0.heightBox;
-        },
-      ),
-      body: BlocBuilder<DetailProductsBloc, DetailProductsState>(
-        builder: (context, state) {
-          if (state is DetailProductsIsSuccess) {
-            return VStack([
-              _buildListImage(state),
-              _buildProductDetails(state),
-            ]).scrollVertical();
-          }
-          return Container();
-        },
+            )
+          ],
+        ),
+        bottomNavigationBar:
+            BlocBuilder<DetailProductsBloc, DetailProductsState>(
+          builder: (context, state) {
+            if (state is DetailProductsIsSuccess) {
+              return BlocConsumer<AddToCartBloc, AddToCartState>(
+                listener: (context, addToCartState) {
+                  if (addToCartState is AddToCartIsSuccess) {
+                    Commons().showSnackBar(context, addToCartState.message);
+                  }
+                  if (addToCartState is AddToCartIsFailed) {
+                    Commons().showSnackBar(context, addToCartState.message);
+                  }
+                },
+                builder: (context, addToCartState) {
+                  return BlocBuilder<CheckCategoryCubit, CheckCategoryState>(
+                    builder: (context, categoryState) {
+                      return ButtonWidget(
+                        text: 'Add To Cart',
+                        isLoading: (addToCartState is AddToCartIsLoading),
+                        onPressed: () {
+                          BlocProvider.of<AddToCartBloc>(context).add(AddToCart(
+                              state.model,
+                              (categoryState as CheckCategoryIsSelected)
+                                  .selectedCategory));
+                        },
+                      ).p16().box.white.withShadow([
+                        BoxShadow(
+                            blurRadius: 10,
+                            color: colorName.grey.withOpacity(.1))
+                      ]).make();
+                    },
+                  );
+                },
+              );
+            }
+            return 0.heightBox;
+          },
+        ),
+        body: BlocBuilder<DetailProductsBloc, DetailProductsState>(
+          builder: (context, state) {
+            if (state is DetailProductsIsSuccess) {
+              return VStack([
+                _buildListImage(state),
+                _buildProductDetails(state),
+              ]).scrollVertical();
+            }
+            return 0.heightBox;
+          },
+        ),
       ),
     );
   }
@@ -203,7 +210,16 @@ class DetailScreen extends StatelessWidget {
                     }).pOnly(right: 4))
                 .toList());
           },
-        )
+        ),
+        VStack([
+          'Stock Items'.text.size(16).bold.fontFamily('Poppins').make(),
+          4.heightBox,
+          state.model.stock!.text
+              .size(14)
+              .fontFamily('Poppins')
+              .color(colorName.grey)
+              .make(),
+        ]).py16(),
       ])
     ]).p16();
   }

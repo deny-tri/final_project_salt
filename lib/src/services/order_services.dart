@@ -30,7 +30,7 @@ class OrderServices {
   Future<Either<String, String>> orderProcess(OrderModel model) async {
     try {
       await orderCollection.doc(model.id).set(model.toMap());
-      return right('Berhasil Melakukan Checkout');
+      return right('Successfully Ordered');
     } catch (e) {
       return left(e.toString());
     }

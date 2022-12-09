@@ -63,7 +63,7 @@ class CartScreen extends StatelessWidget {
                           return BlocBuilder<OrderBloc, OrderState>(
                             builder: (context, orderState) {
                               return ButtonWidget(
-                                text: 'Beli',
+                                text: 'Buy',
                                 isLoading: (orderState is OrderIsLoading)
                                     ? true
                                     : false,
@@ -118,8 +118,8 @@ class CartScreen extends StatelessWidget {
                         if (checkState is CheckboxCartIsChecked) {
                           return ((checkState.model
                                       .containsAll(state.retrainData))
-                                  ? 'Batalkan'
-                                  : 'Pilih Semua')
+                                  ? 'Cancel'
+                                  : 'Check All')
                               .text
                               .medium
                               .color((checkState.model
@@ -148,137 +148,146 @@ class CartScreen extends StatelessWidget {
           )
         ],
       ),
-      body: BlocBuilder<ListCartBloc, ListCartState>(
-        builder: (context, state) {
-          if (state is ListCartIsSuccess) {
-            final data = state.data;
-
-            return ListView.separated(
-              separatorBuilder: (context, index) => VxDivider(
-                color: colorName.grey.withOpacity(.1),
-              ),
-              itemCount: state.retrainData.length,
-              itemBuilder: (context, index) {
-                List tempList = <ProductModel>[];
-                for (var u in data) {
-                  if (u.category[0] == state.retrainData[index].category[0]) {
-                    tempList.add(u);
-                  }
-                }
-
-                return VxBox(
-                  child: HStack(
-                    [
-                      BlocBuilder<CheckboxCartCubit, CheckboxCartState>(
-                        builder: (context, checkState) {
-                          if (checkState is CheckboxCartIsChecked) {
-                            return checkState.model
-                                    .contains(state.retrainData[index])
-                                ? const Icon(
-                                    Icons.check_box,
-                                    color: colorName.accentBlue,
-                                  ).onTap(() {
-                                    BlocProvider.of<CheckboxCartCubit>(context)
-                                        .removeCheckBox(
-                                            state.retrainData[index]);
-                                  })
-                                : const Icon(
-                                    Icons.check_box_outline_blank_rounded,
-                                    color: colorName.accentBlue,
-                                  ).onTap(() {
-                                    BlocProvider.of<CheckboxCartCubit>(context)
-                                        .addCheckBox(state.retrainData[index]);
-                                  });
-                          }
-                          return 0.heightBox;
-                        },
-                      ),
-                      16.widthBox,
-                      VxBox()
-                          .bgImage(DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                state.retrainData[index].picture![0],
-                              )))
-                          .roundedSM
-                          .size(context.percentWidth * 16,
-                              context.percentWidth * 16)
-                          .make(),
-                      16.widthBox,
-                      VStack(
-                        [
-                          state.retrainData[index].name!.text
-                              .color(colorName.black)
-                              .size(16)
-                              .bold
-                              .make(),
-                          4.heightBox,
-                          Commons()
-                              .setPriceToIDR(state.retrainData[index].price!)
-                              .text
-                              .color(colorName.black)
-                              .size(12)
-                              .make(),
-                          4.heightBox,
-                          state.retrainData[index].category[0].text
-                              .color(colorName.black)
-                              .size(12)
-                              .make()
-                              .pSymmetric(h: 12, v: 6)
-                              .box
-                              .color(colorName.grey.withOpacity(.1))
-                              .make(),
-                          4.heightBox,
-                        ],
-                        alignment: MainAxisAlignment.start,
-                      ).expand(),
-                      HStack(
-                        [
-                          const Icon(
-                            Icons.remove_circle_outline_rounded,
-                            color: colorName.black,
-                          ).onTap(() {
-                            BlocProvider.of<ListCartBloc>(context)
-                                .add(DecrementCart(state.retrainData[index]));
-                          }),
-                          4.widthBox,
-                          tempList.length.text
-                              .color(colorName.black)
-                              .size(12)
-                              .make()
-                              .pSymmetric(h: 12, v: 6)
-                              .box
-                              .color(colorName.black.withOpacity(.1))
-                              .make(),
-                          4.widthBox,
-                          BlocListener<AddToCartBloc, AddToCartState>(
-                            listener: (context, state) {
-                              if (state is AddToCartIsSuccess) {
-                                BlocProvider.of<ListCartBloc>(context)
-                                    .add(FetchListCart());
-                              }
-                            },
-                            child: const Icon(
-                              Icons.add_circle_outline_rounded,
-                              color: colorName.black,
-                            ).onTap(() {
-                              BlocProvider.of<AddToCartBloc>(context).add(
-                                  AddToCart(state.retrainData[index],
-                                      state.retrainData[index].category[0]));
-                            }),
-                          )
-                        ],
-                      ),
-                      // )
-                    ],
-                    alignment: MainAxisAlignment.start,
-                  ).p16(),
-                ).make();
-              },
-            );
-          }
-          return 0.heightBox;
+      body: RefreshIndicator(
+        onRefresh: () async {
+          BlocProvider.of<ListProductBloc>(context).add(FetchListProduct());
         },
+        child: BlocBuilder<ListCartBloc, ListCartState>(
+          builder: (context, state) {
+            if (state is ListCartIsSuccess) {
+              final data = state.data;
+
+              return ListView.separated(
+                separatorBuilder: (context, index) => VxDivider(
+                  color: colorName.grey.withOpacity(.1),
+                ),
+                itemCount: state.retrainData.length,
+                itemBuilder: (context, index) {
+                  List tempList = <ProductModel>[];
+                  for (var u in data) {
+                    if (u.category[0] == state.retrainData[index].category[0]) {
+                      tempList.add(u);
+                    }
+                  }
+
+                  return VxBox(
+                    child: HStack(
+                      [
+                        BlocBuilder<CheckboxCartCubit, CheckboxCartState>(
+                          builder: (context, checkState) {
+                            if (checkState is CheckboxCartIsChecked) {
+                              return checkState.model
+                                      .contains(state.retrainData[index])
+                                  ? const Icon(
+                                      Icons.check_box,
+                                      color: colorName.accentBlue,
+                                    ).onTap(() {
+                                      BlocProvider.of<CheckboxCartCubit>(
+                                              context)
+                                          .removeCheckBox(
+                                              state.retrainData[index]);
+                                    })
+                                  : const Icon(
+                                      Icons.check_box_outline_blank_rounded,
+                                      color: colorName.accentBlue,
+                                    ).onTap(() {
+                                      BlocProvider.of<CheckboxCartCubit>(
+                                              context)
+                                          .addCheckBox(
+                                              state.retrainData[index]);
+                                    });
+                            }
+                            return 0.heightBox;
+                          },
+                        ),
+                        16.widthBox,
+                        VxBox()
+                            .bgImage(DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  state.retrainData[index].picture![0],
+                                )))
+                            .roundedSM
+                            .size(context.percentWidth * 16,
+                                context.percentWidth * 16)
+                            .make(),
+                        16.widthBox,
+                        VStack(
+                          [
+                            state.retrainData[index].name!.text
+                                .color(colorName.black)
+                                .size(16)
+                                .bold
+                                .make(),
+                            4.heightBox,
+                            Commons()
+                                .setPriceToIDR(state.retrainData[index].price!)
+                                .text
+                                .color(colorName.black)
+                                .size(12)
+                                .make(),
+                            4.heightBox,
+                            state.retrainData[index].category[0].text
+                                .color(colorName.black)
+                                .size(12)
+                                .make()
+                                .pSymmetric(h: 12, v: 6)
+                                .box
+                                .color(colorName.grey.withOpacity(.1))
+                                .make(),
+                            4.heightBox,
+                          ],
+                          alignment: MainAxisAlignment.start,
+                        ).expand(),
+                        HStack(
+                          [
+                            const Icon(
+                              Icons.remove_circle_outline_rounded,
+                              color: colorName.accentRed,
+                            ).onTap(() {
+                              BlocProvider.of<ListCartBloc>(context)
+                                  .add(DecrementCart(state.retrainData[index]));
+                            }),
+                            4.widthBox,
+                            tempList.length.text
+                                .color(colorName.black)
+                                .size(12)
+                                .make()
+                                .pSymmetric(h: 12, v: 6)
+                                .box
+                                .roundedFull
+                                .color(colorName.grey.withOpacity(.1))
+                                .make(),
+                            4.widthBox,
+                            BlocListener<AddToCartBloc, AddToCartState>(
+                              listener: (context, state) {
+                                if (state is AddToCartIsSuccess) {
+                                  BlocProvider.of<ListCartBloc>(context)
+                                      .add(FetchListCart());
+                                }
+                              },
+                              child: const Icon(
+                                Icons.add_circle_outline_rounded,
+                                color: colorName.accentRed,
+                              ).onTap(() {
+                                BlocProvider.of<AddToCartBloc>(context).add(
+                                    AddToCart(state.retrainData[index],
+                                        state.retrainData[index].category[0]));
+                              }),
+                            )
+                          ],
+                        ),
+                        // )
+                      ],
+                      alignment: MainAxisAlignment.start,
+                    ).p16(),
+                  ).make();
+                },
+              );
+            }
+            return 0.heightBox;
+          },
+        ),
       ),
     );
   }

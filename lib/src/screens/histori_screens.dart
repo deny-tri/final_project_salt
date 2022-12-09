@@ -7,7 +7,7 @@ class HistoriScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: 'Histori'.text.color(colorName.accentRed).makeCentered(),
+        title: 'History'.text.color(colorName.accentRed).makeCentered(),
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
@@ -53,86 +53,81 @@ class HistoriScreens extends StatelessWidget {
           )
         ],
       ),
-      body: SafeArea(
-        child: BlocBuilder<ListOrderBloc, ListOrderState>(
-          builder: (context, listOrderState) {
-            if (listOrderState is ListOrderIsSuccess) {
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: listOrderState.model.length,
-                itemBuilder: (context, index) {
-                  return VStack([
-                    HStack([
-                      listOrderState.model[index].productName!.text
-                          .color(colorName.black)
-                          .make()
-                          .expand(),
-                      (listOrderState.model[index].paymentStatus! == 0
-                              ? 'Belum Dibayar'
-                              : listOrderState.model[index].paymentStatus! == 1
-                                  ? 'Pesanan Diproses'
-                                  : 'Selesai')
+      body: RefreshIndicator(
+        onRefresh: () async {
+          BlocProvider.of<ListProductBloc>(context).add(FetchListProduct());
+        },
+        child: SafeArea(
+          child: BlocBuilder<ListOrderBloc, ListOrderState>(
+            builder: (context, listOrderState) {
+              if (listOrderState is ListOrderIsSuccess) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: listOrderState.model.length,
+                  itemBuilder: (context, index) {
+                    return VStack([
+                      HStack([
+                        listOrderState.model[index].productName!.text
+                            .color(colorName.black)
+                            .make()
+                            .expand(),
+                        (listOrderState.model[index].paymentStatus! == 0
+                                ? 'not yet paid'
+                                : listOrderState.model[index].paymentStatus! ==
+                                        1
+                                    ? 'Order in Progress'
+                                    : 'Done')
+                            .text
+                            .color(
+                                (listOrderState.model[index].paymentStatus! == 0
+                                    ? colorName.accentRed
+                                    : listOrderState
+                                                .model[index].paymentStatus! ==
+                                            1
+                                        ? colorName.accentBlue
+                                        : colorName.accentGreen))
+                            .make()
+                      ]),
+                      const VxDivider(type: VxDividerType.horizontal).py8(),
+                      VStack(listOrderState.model[index].products
+                          .map((e) => HStack([
+                                VxBox()
+                                    .size(40, 40)
+                                    .bgImage(DecorationImage(
+                                      image: NetworkImage(
+                                        e.picture![0],
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ))
+                                    .roundedSM
+                                    .make(),
+                                4.widthBox,
+                                e.name!.text.color(colorName.black).make(),
+                              ]).py4())
+                          .toList()),
+                      16.heightBox,
+                      'Total: ${Commons().setPriceToIDR(listOrderState.model[index].totalPrice!)}'
                           .text
-                          .color((listOrderState.model[index].paymentStatus! ==
-                                  0
-                              ? colorName.accentRed
-                              : listOrderState.model[index].paymentStatus! == 1
-                                  ? colorName.accentBlue
-                                  : colorName.accentGreen))
+                          .color(colorName.black)
+                          .bold
                           .make()
-                    ]),
-                    const VxDivider(type: VxDividerType.horizontal).py8(),
-                    VStack(listOrderState.model[index].products
-                        .map((e) => HStack([
-                              VxBox()
-                                  .size(40, 40)
-                                  .bgImage(DecorationImage(
-                                    image: NetworkImage(
-                                      e.picture![0],
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ))
-                                  .roundedSM
-                                  .make(),
-                              4.widthBox,
-                              e.name!.text.color(colorName.black).make(),
-                            ]).py4())
-                        .toList()),
-                    16.heightBox,
-                    'Total: ${Commons().setPriceToIDR(listOrderState.model[index].totalPrice!)}'
-                        .text
-                        .color(colorName.black)
-                        .bold
+                          .objectBottomRight(),
+                    ])
+                        .p16()
+                        .box
+                        .roundedSM
+                        .outerShadow
+                        .white
+                        .color(colorName.white)
                         .make()
-                        .objectBottomRight(),
-                  ])
-                      .p16()
-                      .box
-                      .roundedSM
-                      .color(colorName.white)
-                      .make()
-                      .p16()
-                      .onTap(() {
-                    switch (listOrderState.model[index].paymentStatus!) {
-                      case 0:
-                        Commons()
-                            .showSnackBar(context, 'Ke Halaman Pembayaran');
-                        break;
-                      case 1:
-                        Commons().showSnackBar(context, 'Ke Halaman Detail');
-                        break;
-                      case 2:
-                        Commons().showSnackBar(context, 'Ke Halaman Selesai');
-                        break;
-                      default:
-                    }
-                  });
-                },
-              );
-            }
-            return 0.heightBox;
-          },
+                        .p16();
+                  },
+                );
+              }
+              return 0.heightBox;
+            },
+          ),
         ),
       ),
     );

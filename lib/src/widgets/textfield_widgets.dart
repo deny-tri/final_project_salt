@@ -25,6 +25,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
+      style: const TextStyle(color: colorName.black),
       enabled: widget.isEnabled!,
       textAlignVertical: TextAlignVertical.center,
       obscureText: (widget.isPassword!) ? isObscure : false,
@@ -75,6 +76,7 @@ class _TextAdminState extends State<TextAdmin> {
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
+      style: const TextStyle(color: colorName.black),
       decoration: InputDecoration(
         hintText: widget.title,
         hintStyle: const TextStyle(

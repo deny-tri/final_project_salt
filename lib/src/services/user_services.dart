@@ -40,24 +40,11 @@ class UserServices {
 
   Future<Either<String, UserModel>> loadUserData(String? uid) async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-
-      await FirebaseAuth.instance.signInWithCredential(credential);
-
       final userData = await usersCollection.doc(uid).get();
       if (userData.data()!.isNotEmpty) {
-        await FirebaseAuth.instance.signInWithCredential(credential);
         return right(UserModel.fromMap(userData.data()!));
       } else {
-        return left('User Belum Terdaftar');
+        return left('the user has not been registered');
       }
     } on FirebaseAuthException catch (e) {
       return left(e.toString().split("]").last);
@@ -99,34 +86,37 @@ class UserServices {
             uid: result.user!.uid,
             username: result.user!.email!.split('@')[0]);
         usersCollection.doc(result.user!.uid).set(userData.toMap());
-        await FirebaseAuth.instance.signInWithCredential(credential);
         return right(userData);
       }
-      return left('Sign In Gagal');
+      return left('Login Failed');
     } on FirebaseAuthException catch (e) {
       return left(e.toString().split(']').last);
     }
   }
 
-  Future<void> authGoogleLogin() async {
-    try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  Future<UserCredential> authGoogleLogin() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
 
-      await FirebaseAuth.instance.signInWithCredential(credential);
-    } catch (e) {
-      throw Exception(e.toString());
-    }
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   Future<void> logOutUser() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  Future<void> resetPassword({required String email}) async {
+    try {
+      return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print(e); // showError(title: '...', error: e);
+    }
   }
 }

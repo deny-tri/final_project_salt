@@ -21,6 +21,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => CheckSavedCubit()),
         BlocProvider(create: (context) => CheckCategoryCubit()),
         BlocProvider(create: (context) => CartCountCubit()),
+        BlocProvider(create: (context) => WishlistCountCubit()),
         BlocProvider(create: (context) => ListCartBloc()),
         BlocProvider(create: (context) => CheckboxCartCubit()),
         BlocProvider(create: (context) => DarkThemeCubit()),

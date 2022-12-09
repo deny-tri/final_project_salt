@@ -24,7 +24,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
       },
     );
-
     on<GoogleLoginInRequested>((event, emit) async {
       emit(LoginIsLoading());
       final result = await UserServices().signInWithGoogle();
