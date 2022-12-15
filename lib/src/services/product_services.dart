@@ -211,4 +211,18 @@ class ProductService {
       return left(e.toString());
     }
   }
+
+  Future<Either<String, List<ProductModel>>> searchProduct() async {
+    try {
+      final querySnapshot = await productCollection.get();
+
+      final searchData = <ProductModel>[];
+      for (var element in querySnapshot.docs) {
+        searchData.add(ProductModel.fromMap(element.data()));
+      }
+      return right(searchData);
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
 }

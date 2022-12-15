@@ -11,7 +11,7 @@ class _HomeScreensState extends State<HomeScreens> {
   late bool _isLoading;
   late bool _isLoadingApp;
   late CountdownTimerController controller;
-  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 1200000;
+  int endTime = DateTime(2022, 12, 25, 12, 48, 00).millisecondsSinceEpoch;
   @override
   void initState() {
     _isLoadingApp = true;
@@ -30,9 +30,7 @@ class _HomeScreensState extends State<HomeScreens> {
     controller = CountdownTimerController(endTime: endTime, onEnd: onEnd);
   }
 
-  void onEnd() {
-    print('onEnd');
-  }
+  void onEnd() {}
 
   @override
   void dispose() {
@@ -76,17 +74,10 @@ class _HomeScreensState extends State<HomeScreens> {
                         onEnd: onEnd,
                         endTime: endTime,
                         textStyle: const TextStyle(
-                            color: colorName.white,
+                            color: colorName.accentRed,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.bold),
                       )
-                          .box
-                          .outerShadow
-                          .color(colorName.accentRed)
-                          .rounded
-                          .size(135, 30)
-                          .p4
-                          .makeCentered(),
                     ]),
                     8.heightBox,
                     VxBox(
@@ -150,7 +141,7 @@ class _HomeScreensState extends State<HomeScreens> {
                 items: [
                   "https://assets.digination.id/crop/0x0:0x0/x/photo/2021/03/19/3776868825.png",
                   "https://www.qiscus.com/id/wp-content/uploads/sites/2/2022/04/Cara-menghitung-diskon.png",
-                  "https://assets.jalantikus.com/assets/cache/0/400/tips/2019/03/15/perbedeaan-cashback-dengan-diskon-41f30.jpg.webp",
+                  "https://png.pngtree.com/png-vector/20210920/ourmid/pngtree-flat-promo-sale-icon-label-png-image_3942688.png",
                   "https://kicaunews.com/wp-content/uploads/2022/02/8E0068FF-8604-4E9B-A839-F2B71D8A4FEC.png",
                 ].map((index) {
                   return Image.network(
@@ -166,7 +157,7 @@ class _HomeScreensState extends State<HomeScreens> {
             items: [
               "https://assets.digination.id/crop/0x0:0x0/x/photo/2021/03/19/3776868825.png",
               "https://www.qiscus.com/id/wp-content/uploads/sites/2/2022/04/Cara-menghitung-diskon.png",
-              "https://assets.jalantikus.com/assets/cache/0/400/tips/2019/03/15/perbedeaan-cashback-dengan-diskon-41f30.jpg.webp",
+              "https://png.pngtree.com/png-vector/20210920/ourmid/pngtree-flat-promo-sale-icon-label-png-image_3942688.png",
               "https://kicaunews.com/wp-content/uploads/2022/02/8E0068FF-8604-4E9B-A839-F2B71D8A4FEC.png",
             ].map((index) {
               return Image.network(
