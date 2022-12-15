@@ -16,37 +16,39 @@ class _LoginScreensState extends State<LoginScreens> {
     return Scaffold(
       backgroundColor: colorName.accentBlue,
       body: SafeArea(
-        child: BlocListener<LoginBloc, LoginState>(
-          listener: (context, state) {
-            if (state is LoginIsFailed) {
-              Commons().showSnackBar(context, state.message);
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: state.message.text.make()));
-            } else if (state is LoginIsSuccess) {
-              context.go(routeName.home);
-            }
-          },
-          child: VxBox(
-            child: VStack(
-              [
-                Center(
-                  child: Image.asset(
-                    "assets/images/logomegashop.png",
-                    fit: BoxFit.cover,
-                    width: 200,
-                    height: 200,
+        child: SingleChildScrollView(
+          child: BlocListener<LoginBloc, LoginState>(
+            listener: (context, state) {
+              if (state is LoginIsFailed) {
+                Commons().showSnackBar(context, state.message);
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: state.message.text.make()));
+              } else if (state is LoginIsSuccess) {
+                context.go(routeName.home);
+              }
+            },
+            child: VxBox(
+              child: VStack(
+                [
+                  Center(
+                    child: Image.asset(
+                      "assets/images/logomegashop.png",
+                      fit: BoxFit.cover,
+                      width: 200,
+                      height: 200,
+                    ),
                   ),
-                ),
-                16.heightBox,
-                _buildLoginForm(),
-              ],
-              alignment: MainAxisAlignment.center,
-              axisSize: MainAxisSize.max,
-            ).p16(),
-          )
-              .gradientFromTo(
-                  from: colorName.accentRed, to: colorName.accentYellow)
-              .make(),
+                  16.heightBox,
+                  _buildLoginForm(),
+                ],
+                alignment: MainAxisAlignment.center,
+                axisSize: MainAxisSize.max,
+              ).p16(),
+            )
+                .gradientFromTo(
+                    from: colorName.accentRed, to: colorName.accentYellow)
+                .make(),
+          ),
         ),
       ),
     );
