@@ -38,7 +38,6 @@ class _LoginScreensState extends State<LoginScreens> {
                       height: 200,
                     ),
                   ),
-                  16.heightBox,
                   _buildLoginForm(),
                 ],
                 alignment: MainAxisAlignment.center,
@@ -47,6 +46,8 @@ class _LoginScreensState extends State<LoginScreens> {
             )
                 .gradientFromTo(
                     from: colorName.accentRed, to: colorName.accentYellow)
+                .size(context.safePercentWidth * 100,
+                    context.safePercentHeight * 100)
                 .make(),
           ),
         ),
